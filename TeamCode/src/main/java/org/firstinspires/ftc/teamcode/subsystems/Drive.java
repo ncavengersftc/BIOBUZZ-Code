@@ -7,7 +7,7 @@ import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Drive extends SubsystemBase{
+public class Drive extends SubsystemBase {
     private final Motor frontLeft;
     private final Motor frontRight;
     private final Motor backLeft;
@@ -17,7 +17,7 @@ public class Drive extends SubsystemBase{
 
     private final Telemetry telemetry;
 
-    public Drive (Telemetry telemetry, HardwareMap hardwareMap) {
+    public Drive(Telemetry telemetry, HardwareMap hardwareMap) {
         frontLeft = new Motor(hardwareMap, "Front Left Wheel");
         frontRight = new Motor(hardwareMap, "Front Right Wheel");
         backLeft = new Motor(hardwareMap, "Back Left Wheel");
@@ -28,7 +28,7 @@ public class Drive extends SubsystemBase{
         this.telemetry = telemetry;
     }
 
-    public void drive (double strafeSpeed, double forwardSpeed, double turnSpeed){
+    public void drive(double strafeSpeed, double forwardSpeed, double turnSpeed) {
         drive.driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);
     }
 
