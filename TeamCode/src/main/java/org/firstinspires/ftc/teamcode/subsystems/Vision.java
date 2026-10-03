@@ -22,7 +22,7 @@ public class Vision extends SubsystemBase {
        limelight = hardwareMap.get(Limelight3A.class, "Limelight Camera");
 
     }
-    public double distanceFromHub () {
+    public double distanceFromGoal() {
         double degrees = ty + Constants.limelightMountingAngle;
         double radians = degrees * (3.14159 / 180.0);
         return (Constants.goalHeightInches - Constants.limelightHeightInches) / Math.tan(radians);
