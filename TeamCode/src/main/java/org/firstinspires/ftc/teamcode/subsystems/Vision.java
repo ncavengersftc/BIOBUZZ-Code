@@ -40,7 +40,7 @@ public class Vision extends SubsystemBase {
     public Vision (HardwareMap hardwareMap, Telemetry telemetry){
        this.telemetry = telemetry;
 
-       limelight = hardwareMap.get(Limelight3A.class, "Limelight Camera");
+       limelight = hardwareMap.get(Limelight3A.class, "limelight");
        imu = hardwareMap.get(IMU.class, "imu");
 
        // Initializes IMU
