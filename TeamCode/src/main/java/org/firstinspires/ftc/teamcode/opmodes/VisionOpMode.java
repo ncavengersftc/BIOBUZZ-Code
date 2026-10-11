@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
@@ -10,9 +11,13 @@ public class VisionOpMode extends CommandOpMode {
 
     private Vision vision;
 
+    private IMU imu;
+
     @Override
     public void initialize() {
-        vision = new Vision(hardwareMap, telemetry);
+        imu = hardwareMap.get(IMU.class, "imu");
+
+        vision = new Vision(hardwareMap, telemetry, imu);
 
         register(vision);
     }

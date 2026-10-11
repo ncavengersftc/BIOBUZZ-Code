@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
-import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,7 +11,6 @@ import com.seattlesolvers.solverslib.command.SubsystemBase;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.teamcode.Constants;
 
 import java.util.List;
 
@@ -37,11 +35,11 @@ public class Vision extends SubsystemBase {
     private double distanceFromTag;
 
 
-    public Vision (HardwareMap hardwareMap, Telemetry telemetry){
+    public Vision (HardwareMap hardwareMap, Telemetry telemetry, IMU imu){
        this.telemetry = telemetry;
 
        limelight = hardwareMap.get(Limelight3A.class, "limelight");
-       imu = hardwareMap.get(IMU.class, "imu");
+       this.imu = imu;
 
        // Initializes IMU
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
