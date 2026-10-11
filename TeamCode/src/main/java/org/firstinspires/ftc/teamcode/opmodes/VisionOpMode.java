@@ -8,21 +8,25 @@ import com.seattlesolvers.solverslib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
-@TeleOp(name = "Vision Test", group = "Vision")
+@TeleOp(name = "VisionOpMode", group = "Vision")
 public class VisionOpMode extends CommandOpMode {
 
     private Vision vision;
-
-    private MultipleTelemetry multipleTelemetry;
 
 
     @Override
     public void initialize() {
         IMU imu = hardwareMap.get(IMU.class, "imu");
 
-        multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        // Initialize the Dashboard
+        FtcDashboard dashboard = FtcDashboard.getInstance();
 
-        vision = new Vision(hardwareMap, multipleTelemetry, imu);
+        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
+
+        telemetry.addData("Status", "Dashboard Initialized");
+        telemetry.update();
+
+        vision = new Vision(hardwareMap, telemetry, imu);
 
         register(vision);
     }
@@ -31,7 +35,7 @@ public class VisionOpMode extends CommandOpMode {
     public void run() {
         // super so that periodic in the subsystems also run
         super.run();
-        multipleTelemetry.addData("Distance from tag (m)", vision.distanceToTag());
-        multipleTelemetry.update();
+        telemetry.addData("Distance from tag (m)", vision.distanceToTag());
+        telemetry.update();
     }
 }
