@@ -13,18 +13,16 @@ public class VisionOpMode extends CommandOpMode {
 
     private Vision vision;
 
-    private IMU imu;
-
-    private MultipleTelemetry telemetry;
+    private MultipleTelemetry multipleTelemetry;
 
 
     @Override
     public void initialize() {
-        imu = hardwareMap.get(IMU.class, "imu");
+        IMU imu = hardwareMap.get(IMU.class, "imu");
 
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        vision = new Vision(hardwareMap, telemetry, imu);
+        vision = new Vision(hardwareMap, multipleTelemetry, imu);
 
         register(vision);
     }
@@ -33,7 +31,7 @@ public class VisionOpMode extends CommandOpMode {
     public void run() {
         // super so that periodic in the subsystems also run
         super.run();
-        telemetry.addData("Distance from tag (m)", vision.distanceToTag());
-        telemetry.update();
+        multipleTelemetry.addData("Distance from tag (m)", vision.distanceToTag());
+        multipleTelemetry.update();
     }
 }
