@@ -6,31 +6,31 @@ import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 public class Turret extends SubsystemBase {
-    private final MotorEx shooterMotor;
+    private final MotorEx turretMotor;
 
 
     public Turret(HardwareMap hMap) {
-        shooterMotor = new MotorEx(hMap, "Shooter Motor", 28.0, 6000);
-        shooterMotor.setRunMode(Motor.RunMode.PositionControl);
+        turretMotor = new MotorEx(hMap, "Turret Motor", Motor.GoBILDA.RPM_312);
+        turretMotor.setRunMode(Motor.RunMode.PositionControl);
 
         // set and get the position coefficient
-        shooterMotor.setPositionCoefficient(0.05);
-        double kP = shooterMotor.getPositionCoefficient();
-        shooterMotor.setPositionTolerance(15);
+        turretMotor.setPositionCoefficient(0.05);
+        double kP = turretMotor.getPositionCoefficient();
+        turretMotor.setPositionTolerance(15);
     }
 
     public void setTargetPosition (int position){
-        shooterMotor.setTargetPosition(position);
+        turretMotor.setTargetPosition(position);
 
         // perform the control loop
-        while (!shooterMotor.atTargetPosition()) {
-            shooterMotor.set(0.75);
+        while (!turretMotor.atTargetPosition()) {
+            turretMotor.set(0.75);
         }
-        shooterMotor.stopMotor(); // stop the motor
+        turretMotor.stopMotor(); // stop the motor
     }
 
     public void stop (){
-        shooterMotor.stopMotor();
+        turretMotor.stopMotor();
     }
 
 }
