@@ -35,7 +35,6 @@ public class RedOne extends CommandOpMode {
         shooter = new Shooter(hardwareMap);
         follower = Constants.create(hardwareMap);
         follower.setPose(start1);
-
         schedule(new SequentialCommandGroup(
                 new ShootPollen(shooter),
                 new WaitCommand(50),

@@ -31,11 +31,10 @@ public class BlueOne extends CommandOpMode {
         private final Path third = Paths.curve(start1,control2, end2).linear(start1,end2);
         private final Path fourth = Paths.curve(end2,control3,end3).linear(end2,end3);
     @Override
-    public void initialize(){
+    public void initialize() {
         shooter = new Shooter(hardwareMap);
         follower = Constants.create(hardwareMap);
         follower.setPose(start1);
-
         schedule(new SequentialCommandGroup(
                 new ShootPollen(shooter),
                 new WaitCommand(50),
@@ -50,7 +49,8 @@ public class BlueOne extends CommandOpMode {
                 new FollowPathCommand(follower, fourth, false)
     ));
         }
-    public void run(){
+
+    public void run() {
 
     }
 }
