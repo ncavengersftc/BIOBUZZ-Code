@@ -42,5 +42,16 @@ public class Vision extends SubsystemBase {
 
         return distanceToTag;
     }
+
+    public double gettx (){
+        LLResult result = limelight.getLatestResult();
+
+        if (result == null || !result.isValid()) {
+            return Double.NaN;
+        }
+
+        return gettx();
+    }
+
 }
 
