@@ -23,7 +23,13 @@ public class Turret extends SubsystemBase {
     public void setTargetPosition (double turns) {
         int targetTicks = (int) Math.round(turns * 537.7);
         turretMotor.setTargetPosition(targetTicks);
-        // perform the control loop
+        // turns until target postion
+
+        while(!turretMotor.atTargetPosition()){
+            turretMotor.set(0.75);
+        }
+
+        turretMotor.stopMotor();
 }
 
     public void trackTarget(double tx) {
@@ -42,6 +48,7 @@ public class Turret extends SubsystemBase {
     }
 
     private void stop() {
+        turretMotor.stopMotor();
     }
 }
 
