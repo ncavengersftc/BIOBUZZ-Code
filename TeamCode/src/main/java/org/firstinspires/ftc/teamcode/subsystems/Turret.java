@@ -33,16 +33,17 @@ public class Turret extends SubsystemBase {
 
     public void trackTarget(double tx) {
 
-        if (!Double.isFinite(tx))|| Math.abs(tx) < 1.0 {
+        if (!Double.isFinite(tx))||(Math.abs(tx) < 1.0){
             stop();
             return;
         }
         double power = tx * 0.015;
         power = Math.max(-0.25, Math.min(0.25, power));
         turretMotor.set(power);
+
     }
 
-    private void stop() {
+    public void stop() {
         turretMotor.stopMotor();
     }
 }

@@ -12,10 +12,12 @@ import org.firstinspires.ftc.teamcode.subsystems.Vision;
 @TeleOp (name = "TestOpMode", group = "Test")
 public class TestOpMode extends CommandOpMode {
     private Turret turret;
+    private Vision vision;
 
     @Override
     public void initialize (){
         IMU imu = hardwareMap.get(IMU.class, "imu");
+        vision = new Vision(hardwareMap, telemetry, imu);
         FtcDashboard dashboard = FtcDashboard.getInstance();
 
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
@@ -31,6 +33,7 @@ public class TestOpMode extends CommandOpMode {
         turret.trackTarget();
         telemetry.addData("TX (degrees)", tx);
         telemetry.update();
+        vision.gettx();
     }
 
 
