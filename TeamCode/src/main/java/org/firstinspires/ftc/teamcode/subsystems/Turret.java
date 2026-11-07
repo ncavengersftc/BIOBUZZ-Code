@@ -16,12 +16,12 @@ public class Turret extends SubsystemBase {
 
         // set and get the position coefficient
         turretMotor.setPositionCoefficient(0.05);
-        double kP = turretMotor.getPositionCoefficient();
         turretMotor.setPositionTolerance(15);
     }
 
-    public void setTargetPosition (int position){
-        turretMotor.setTargetPosition(position);
+    public void setTargetPosition (double turns) {
+        int targetTicks = (int) Math.round(turns * 537.7);
+        turretMotor.setTargetPosition(targetTicks);
 
         // perform the control loop
         while (!turretMotor.atTargetPosition()) {
