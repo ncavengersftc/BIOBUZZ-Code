@@ -1,129 +1,57 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-
-import java.util.List;
 
 public class Vision extends SubsystemBase {
-
     private final Limelight3A limelight;
 
-    // Robot gyroscope (called IMU)
-    private final IMU imu;
-
-    private final Telemetry telemetry;
-
-    // Robot position on 3D field
-    private Pose3D pose;
-
-    private LLResult result;
-
-    // Yaw (heading) of the robot
-    private double currentYaw;
-
-    // Distance to the tag
-    private double distanceFromTag;
+    private static final double a1 = 25.0; // Camera mounting angle (degrees)
+    private static final double h1 = 20.0; // Camera height (inches)
+    private static final double h2 = 60.0; // Target height (inches)
 
 
-    public Vision (HardwareMap hardwareMap, Telemetry telemetry, IMU imu){
-       this.telemetry = telemetry;
-
-       limelight = hardwareMap.get(Limelight3A.class, "limelight");
-       this.imu = imu;
-
-       // Initializes IMU
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
-        ));
-        imu.initialize(parameters);
-
-       // Request data at 100Hz and start the camera processing
-       limelight.setPollRateHz(100);
-       limelight.start();
+    public Vision(HardwareMap hardwareMap, Telemetry telemetry, IMU imu) {
+        limelight = hardwareMap.get(Limelight3A.class, "Limelight");
+        limelight.pipelineSwitch(0);
+        limelight.start();
 
     }
 
-    private void updateLimelightValues() {
-        // Robots yaw (angle it is facing) from IMU
-        currentYaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+    public double getDistance() {
+        LLResult result = limelight.getLatestResult();
 
-        // Give yaw to limelight so it can calculate position accurately
-        limelight.updateRobotOrientation(currentYaw);
-
-        // Gets latest limelight result
-        result = limelight.getLatestResult();
-    }
-
-    private void updatePose() {
-        pose = result.getBotpose_MT2();
-
-        /*
-        if (pose != null) {
-            telemetry.addData("MT2 Pose X", pose.getPosition().x);
-            telemetry.addData("MT2 Pose Y", pose.getPosition().y);
-            telemetry.addData("MT2 Yaw", currentYaw);
-        }
-        */
-    }
-
-    private void updateDistance() {
-        // Fetch the list of all tags currently in view
-        List<LLResultTypes.FiducialResult> tags = result.getFiducialResults();
-
-        // If the limelight result is valid
-        if (!tags.isEmpty()) {
-            // Grab the first tag the camera sees
-            LLResultTypes.FiducialResult firstTag = tags.get(0);
-
-            // Get the pose of the target relative to the camera
-            Pose3D targetPose = firstTag.getTargetPoseCameraSpace();
-
-            if (targetPose != null) {
-                // Extract the X, Y, and Z translations in meters
-                double x = targetPose.getPosition().x;
-                double y = targetPose.getPosition().y;
-                double z = targetPose.getPosition().z;
-
-                // Calculate the distance in meters
-                distanceFromTag = Math.sqrt((x * x) + (y * y) + (z * z));
-            }
-        }
-    }
-
-    public double distanceToTag() {
-        return distanceFromTag;
-    }
-
-    @Override
-    public void periodic () {
-        // Updates the yaw and gets current limelight result
-        updateLimelightValues();
-
-        // If limelight sees a tag
-        if (result != null && result.isValid()) {
-            // Gets robot position
-            updatePose();
-
-            // Updates distance from tag
-            updateDistance();
+        if (result == null || !result.isValid()) {
+            return Double.NaN;
         }
 
-        // If no tags are visible
-        else {
-            telemetry.addData("Vision", "No tags in view");
-        }
+        double targetOffsetAngle_Vertical = result.getTy();
+        // Calculate angle to target
+        double angleToGoalDegrees = a1 + targetOffsetAngle_Vertical;
+
+        // Convert degrees to radians
+        double angleToGoalRadians = Math.toRadians(angleToGoalDegrees);
+
+        // Calculate horizontal distance in inches
+        double distanceToTag = (h2 - h1) / Math.tan(angleToGoalRadians);
+
+        return distanceToTag;
     }
+
+    public double gettx (){
+        LLResult result = limelight.getLatestResult();
+
+        if (result == null || !result.isValid()) {
+            return Double.NaN;
+        }
+
+        return gettx();
+    }
+
 }
-
 
