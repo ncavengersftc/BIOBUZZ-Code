@@ -8,9 +8,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Turret;
 
 public class RotateTurret extends CommandBase {
     private final Turret turret;
-    public RotateTurret(Shooter shooter) {
-        this.turret = new Turret();
-        addRequirements(shooter);
+    public RotateTurret(Turret turret) {
+        this.turret = turret;
+        addRequirements(turret);
     }
     @Override
     public void execute() {
