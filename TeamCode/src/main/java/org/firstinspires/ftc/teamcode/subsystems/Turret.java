@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static com.acmerobotics.dashboard.FtcDashboard.stop;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.seattlesolvers.solverslib.command.SubsystemBase;
@@ -20,25 +19,21 @@ public class Turret extends SubsystemBase {
         turretMotor.setPositionTolerance(15);
     }
 
-    public void setTargetPosition (double turns) {
+    public void setTargetPosition(double turns) {
         int targetTicks = (int) Math.round(turns * 537.7);
         turretMotor.setTargetPosition(targetTicks);
 
         // turns until target position
-        while(!turretMotor.atTargetPosition()){
+        while (!turretMotor.atTargetPosition()) {
             turretMotor.set(0.75);
         }
 
         turretMotor.stopMotor();
-}
+    }
 
     public void trackTarget(double tx) {
 
-        if (!Double.isFinite(tx)) {
-            stop();
-            return;
-        }
-        if (Math.abs(tx) < 1.0) {
+        if (!Double.isFinite(tx))|| Math.abs(tx) < 1.0 {
             stop();
             return;
         }
