@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
@@ -9,8 +10,8 @@ public class Turret extends SubsystemBase {
     private final MotorEx turretMotor;
 
 
-    public Turret(HardwareMap hMap) {
-        turretMotor = new MotorEx(hMap, "Turret Motor", Motor.GoBILDA.RPM_312);
+    public Turret() {
+        turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
         turretMotor.setRunMode(Motor.RunMode.PositionControl);
 
         // set and get the position coefficient
