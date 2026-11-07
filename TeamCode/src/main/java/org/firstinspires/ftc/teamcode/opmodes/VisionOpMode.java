@@ -35,7 +35,7 @@ public class VisionOpMode extends CommandOpMode {
     public void run() {
         // super so that periodic in the subsystems also run
         super.run();
-        telemetry.addData("Distance from tag (m)", vision.distanceToTag());
+        telemetry.addData("Distance from tag (m)", vision.getDistance());
         telemetry.update();
     }
 
