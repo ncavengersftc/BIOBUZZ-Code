@@ -32,16 +32,13 @@ public class Vision extends SubsystemBase {
 
         double targetOffsetAngle_Vertical = result.getTy();
         // Calculate angle to target
-        double angleToGoalDegrees =
-                a1 + targetOffsetAngle_Vertical;
+        double angleToGoalDegrees = a1 + targetOffsetAngle_Vertical;
 
         // Convert degrees to radians
-        double angleToGoalRadians =
-                Math.toRadians(angleToGoalDegrees);
+        double angleToGoalRadians = Math.toRadians(angleToGoalDegrees);
 
         // Calculate horizontal distance in inches
-        double distanceToTag =
-                (h2 - h1) / Math.tan(angleToGoalRadians);
+        double distanceToTag = (h2 - h1) / Math.tan(angleToGoalRadians);
 
         return distanceToTag;
     }
