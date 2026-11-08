@@ -52,6 +52,10 @@ public class Turret extends SubsystemBase {
 
     }
 
+    public void getPosition(){
+        turretMotor.getCurrentPosition();
+    }
+
     public void stop() {
         turretMotor.stopMotor();
     }
