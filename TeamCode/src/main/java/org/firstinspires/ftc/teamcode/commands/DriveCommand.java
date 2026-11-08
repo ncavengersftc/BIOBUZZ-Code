@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class tssotuffboiOFFICIAL extends LinearOpMode {
+public class DriveCommand extends LinearOpMode {
 
     private DcMotor FrontWheelLeft;
     private DcMotor BackWheelLeft;
