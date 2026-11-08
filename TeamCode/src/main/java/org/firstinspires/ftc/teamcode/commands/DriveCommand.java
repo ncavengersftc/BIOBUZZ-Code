@@ -98,6 +98,7 @@ public class DriveCommand extends CommandBase {
                 BackRightServo.setPower(0);
                 APressed = 1;
                 Temp_A_Status = 0;
+
             }
         } else {
             APressed = 0;
