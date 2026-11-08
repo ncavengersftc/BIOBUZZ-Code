@@ -9,8 +9,8 @@ import com.seattlesolvers.solverslib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.subsystems.Turret;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
-@TeleOp (name = "TestOpMode", group = "Test")
-public class TestOpMode extends CommandOpMode {
+@TeleOp (name = "TurretOpMode", group = "Test")
+public class TurretOpMode extends CommandOpMode {
     private Turret turret;
     private Vision vision;
 
