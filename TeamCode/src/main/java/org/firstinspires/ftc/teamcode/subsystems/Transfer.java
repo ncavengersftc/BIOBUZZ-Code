@@ -1,25 +1,36 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
-import com.seattlesolvers.solverslib.hardware.motors.Motor;
-import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 public class Transfer extends SubsystemBase {
-    private final MotorEx transferMotor;
+    private final CRServo frontLeftServo;
+    private final CRServo frontRightServo;
+    private final CRServo backLeftServo;
+    private final CRServo backRightServo;
 
     public Transfer(HardwareMap hardwareMap) {
-        transferMotor = new MotorEx(hardwareMap, "Transfer Motor", Motor.GoBILDA.RPM_312);
+        frontLeftServo = hardwareMap.get(CRServo.class,"Front Left Servo" );
+        frontRightServo = hardwareMap.get(CRServo.class, "Front Right Servo");
+        backLeftServo = hardwareMap.get(CRServo.class, "Back Left Servo");
+        backRightServo = hardwareMap.get(CRServo.class, "Back Right Servo");
+
     }
 
     public void turn(double power) {
-        transferMotor.set(power);
-
+        frontLeftServo.setPower(power);
+        frontRightServo.setPower(power);
+        backRightServo.setPower(power);
+        backLeftServo.setPower(power);
     }
 
     public void stop() {
-        transferMotor.set(0);
+        frontRightServo.setPower(0);
+        frontLeftServo.setPower(0);
+        backRightServo.setPower(0);
+        backLeftServo.setPower(0);
     }
 
 }
