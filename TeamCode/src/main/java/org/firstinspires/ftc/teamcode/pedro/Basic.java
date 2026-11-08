@@ -8,7 +8,7 @@ import com.pedropathing.paths.Path;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
-public class OtherOpmode extends CommandOpMode {
+public class Basic extends CommandOpMode {
     private Follower follower;
     private final PoseFactory poseFactory = PoseFactory.degrees();
     private final Pose start1 = poseFactory.of(56, 8, 270);
