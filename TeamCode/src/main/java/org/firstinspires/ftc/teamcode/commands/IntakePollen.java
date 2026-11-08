@@ -7,6 +7,7 @@ public class IntakePollen extends CommandBase {
         this.intake = intake;
         addRequirements(intake);
     }
+
     @Override
     public void execute() {
         intake.intake(0.25);

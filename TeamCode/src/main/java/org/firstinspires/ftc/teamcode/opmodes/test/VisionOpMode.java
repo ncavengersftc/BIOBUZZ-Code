@@ -8,7 +8,7 @@ import com.seattlesolvers.solverslib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
-@TeleOp(name = "VisionOpMode", group = "Vision")
+@TeleOp(name = "VisionOpMode", group = "Test")
 public class VisionOpMode extends CommandOpMode {
 
     private Vision vision;
@@ -26,7 +26,7 @@ public class VisionOpMode extends CommandOpMode {
         telemetry.addData("Status", "Dashboard Initialized");
         telemetry.update();
 
-        vision = new Vision(hardwareMap, telemetry, imu);
+        vision = new Vision(hardwareMap);
 
         register(vision);
     }
