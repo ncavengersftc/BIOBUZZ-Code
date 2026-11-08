@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
@@ -10,7 +11,7 @@ public class Turret extends SubsystemBase {
     private final MotorEx turretMotor;
 
 
-    public Turret() {
+    public Turret(HardwareMap hardwareMap) {
         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
         turretMotor.setRunMode(Motor.RunMode.PositionControl);
 
@@ -33,7 +34,7 @@ public class Turret extends SubsystemBase {
 
     public void trackTarget(double tx) {
 
-        if (!Double.isFinite(tx))||(Math.abs(tx) < 1.0){
+        if (!Double.isFinite(tx) || Math.abs(tx) < 1.0) {
             stop();
             return;
         }

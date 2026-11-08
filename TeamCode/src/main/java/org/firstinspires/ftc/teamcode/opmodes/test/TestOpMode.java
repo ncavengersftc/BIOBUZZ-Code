@@ -23,17 +23,14 @@ public class TestOpMode extends CommandOpMode {
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
         telemetry.addData("Status", "Dashboard Initialized");
         telemetry.update();
-        turret = new Turret(hardwareMap, telemetry, imu);
+        turret = new Turret(hardwareMap);
         register (turret);
     }
 
     @Override
     public void run (){
         super.run();
-        turret.trackTarget();
-        telemetry.addData("TX (degrees)", tx);
-        telemetry.update();
-        vision.gettx();
+        turret.trackTarget(vision.gettx());
     }
 
 
