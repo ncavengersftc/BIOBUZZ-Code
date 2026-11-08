@@ -32,9 +32,17 @@ public class Turret extends SubsystemBase {
         turretMotor.stopMotor();
     }
 
+// this code makes sure that the turret is always facing  the hive,
+    // No tag -> scan. Tag found -> turn toward it. Tag centered -> stop
     public void trackTarget(double tx) {
 
-        if (!Double.isFinite(tx) || Math.abs(tx) < 1.0) {
+        // If no valid tag is detected
+        if (!Double.isFinite(tx)) {
+            turretMotor.set(0.5);
+        }
+
+        // Stop when tag is centered
+        if (Math.abs(tx) < 1.0) {
             stop();
             return;
         }
@@ -48,4 +56,6 @@ public class Turret extends SubsystemBase {
         turretMotor.stopMotor();
     }
 }
+
+
 
