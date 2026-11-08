@@ -164,6 +164,7 @@ public class tssotuffboiOFFICIAL extends LinearOpMode {
                 } else {
                     XPressed = 0;
                 }
+
                 if (gamepad1.y || gamepad2.y) {
                     if ((gamepad1.y || gamepad2.y) && Temp_Y_Status == 0 && YPressed == 0) {
                         BackLeftServo.setPower(-0.3);
