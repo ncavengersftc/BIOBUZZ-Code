@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
@@ -20,7 +18,7 @@ public class Turret extends SubsystemBase {
         turretMotor.setPositionTolerance(15);
     }
 
-    public void setTargetPosition(double turns) {
+    public void setTargetTurns(double turns) {
         int targetTicks = (int) Math.round(turns * 537.7);
         turretMotor.setTargetPosition(targetTicks);
 
@@ -32,13 +30,13 @@ public class Turret extends SubsystemBase {
         turretMotor.stopMotor();
     }
 
-// this code makes sure that the turret is always facing  the hive,
+    // this code makes sure that the turret is always facing  the hive,
     // No tag -> scan. Tag found -> turn toward it. Tag centered -> stop
     public void trackTarget(double tx) {
 
         // If no valid tag is detected
         if (!Double.isFinite(tx)) {
-            turretMotor.set(0.5);
+            turretMotor.set(0.1);
         }
 
         // Stop when tag is centered
@@ -52,8 +50,8 @@ public class Turret extends SubsystemBase {
 
     }
 
-    public void getPosition(){
-        turretMotor.getCurrentPosition();
+    public double getTurns() {
+        return turretMotor.getCurrentPosition() / 537.7;
     }
 
     public void stop() {

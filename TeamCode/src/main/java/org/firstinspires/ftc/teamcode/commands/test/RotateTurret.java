@@ -14,7 +14,7 @@ public class RotateTurret extends CommandBase {
 
     @Override
     public void execute() {
-        turret.setTargetPosition(0.25);
+        turret.setTargetTurns(0.25);
     }
 }
 
