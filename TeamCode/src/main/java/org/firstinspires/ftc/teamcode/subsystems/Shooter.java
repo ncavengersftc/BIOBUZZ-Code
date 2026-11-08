@@ -16,8 +16,10 @@ public class Shooter extends SubsystemBase {
     public Shooter(HardwareMap hMap) {
         outtakeMotorLeft = hMap.get(DcMotorEx.class, "Outtake Motor Left");
         outtakeMotorRight = hMap.get(DcMotorEx.class, "Outtake Motor Right");
+
         outtakeMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         outtakeMotorRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
         pidfController = new PIDFController(0.001,0.0,0.00,0.0001);
     }
 
@@ -25,6 +27,7 @@ public class Shooter extends SubsystemBase {
     public void shoot(double targetVelocity) {
         double currentVelocity = outtakeMotorLeft.getVelocity();
         double power = pidfController.calculate(currentVelocity, targetVelocity);
+
         outtakeMotorLeft.setPower(power);
         outtakeMotorRight.setPower(power);
     }
@@ -34,6 +37,7 @@ public class Shooter extends SubsystemBase {
         pidfController.reset();
         outtakeMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         outtakeMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
         outtakeMotorLeft.setPower(0);
         outtakeMotorRight.setPower(0);
     }

@@ -18,7 +18,7 @@ public class TestOpMode extends CommandOpMode {
     public void initialize() {
         IMU imu = hardwareMap.get(IMU.class, "imu");
 
-        vision = new Vision(hardwareMap, telemetry, imu);
+        vision = new Vision(hardwareMap);
         turret = new Turret(hardwareMap);
 
         FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -33,7 +33,7 @@ public class TestOpMode extends CommandOpMode {
     @Override
     public void run (){
         super.run();
-        turret.trackTarget(vision.gettx());
+        turret.trackTarget(vision.getTx());
         telemetry.addData("Turret Turns", turret.getTurns());
         telemetry.update();
     }
