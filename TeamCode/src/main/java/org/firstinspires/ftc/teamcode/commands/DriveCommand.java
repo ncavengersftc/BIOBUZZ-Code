@@ -90,6 +90,7 @@ public class DriveCommand extends LinearOpMode {
                     } else if (gamepad1.start && Temp_Flip == -1 && StartPressed == 0) {
                         Temp_Flip = 1;
                         StartPressed = 1;
+
                     }
                 } else {
                     StartPressed = 0;
