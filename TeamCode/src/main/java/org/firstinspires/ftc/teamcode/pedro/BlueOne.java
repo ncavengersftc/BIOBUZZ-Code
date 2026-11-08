@@ -51,6 +51,7 @@ public class BlueOne extends CommandOpMode {
         }
 
     public void run() {
-
+        super.run();
+        follower.update();
     }
 }

@@ -50,6 +50,7 @@ public class RedOne extends CommandOpMode {
     ));
         }
     public void run(){
-
+        super.run();
+        follower.update();
     }
 }
