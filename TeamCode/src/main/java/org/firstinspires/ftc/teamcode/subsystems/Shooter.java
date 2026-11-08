@@ -24,9 +24,8 @@ public class Shooter extends SubsystemBase {
     }
 
 
-    public void shoot(double targetVelocity) {
-        double currentVelocity = outtakeMotorLeft.getVelocity();
-        double power = pidfController.calculate(currentVelocity, targetVelocity);
+    public void shoot(double rotationsPerSecond) {
+        double power = pidfController.calculate(outtakeMotorLeft.getVelocity(), rotationsPerSecond * 28);
 
         outtakeMotorLeft.setPower(power);
         outtakeMotorRight.setPower(power);
@@ -40,5 +39,10 @@ public class Shooter extends SubsystemBase {
 
         outtakeMotorLeft.setPower(0);
         outtakeMotorRight.setPower(0);
+    }
+
+
+    public double getAverageVelocity() {
+        return ((outtakeMotorLeft.getVelocity() + outtakeMotorRight.getVelocity()) / 2) / 28;
     }
 }
