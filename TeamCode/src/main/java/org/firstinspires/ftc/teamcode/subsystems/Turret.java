@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
@@ -42,9 +41,9 @@ public class Turret extends SubsystemBase {
         double power = tx * 0.015;
         power = Math.max(-0.25, Math.min(0.25, power));
 
-        // Protect rotation limits
-        if (currentTurns >= MAX_TURNS && power > 0) power = 0;
-        if (currentTurns <= MIN_TURNS && power < 0) power = 0;
+        // Reverse direction at rotation limits
+        if (currentTurns >= MAX_TURNS && power > 0) power = -0.3;
+        if (currentTurns <= MIN_TURNS && power < 0) power = 0.3;
 
         turretMotor.set(power);
     }
@@ -55,6 +54,5 @@ public class Turret extends SubsystemBase {
 
     public void stop() {
         turretMotor.stopMotor();
-
     }
 }
