@@ -17,7 +17,10 @@ public class Turret extends SubsystemBase {
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
-        turretMotor.setRunMode(Motor.RunMode.RawPower);
+        turretMotor.setRunMode(Motor.RunMode.PositionControl);
+        turretMotor.setPositionCoefficient(0.001);
+        turretMotor.setPositionTolerance(10);
+
     }
 
     public void trackTarget(double tx) {
