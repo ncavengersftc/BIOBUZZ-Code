@@ -51,7 +51,7 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         super.periodic();
-        // Turret max speed limit is 80%
+        // Turret max speed limit is 60%
         turretMotor.set(0.6);
     }
 }
