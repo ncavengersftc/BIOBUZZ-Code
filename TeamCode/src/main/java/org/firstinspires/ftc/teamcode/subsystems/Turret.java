@@ -14,11 +14,11 @@ public class Turret extends SubsystemBase {
     private static final double MIN_TURNS = -0.46;
     private static final double MAX_TURNS = 0.46;
 
-    private static final double kP = 0.001;
+    private static final double KP = 0.8;
     private static final double MAX_POWER = 0.25;
+    private static final double TOLERANCE = 0.01;
 
     private double setpoint = 0;
-    private double scanPower = 0.1;
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
@@ -27,12 +27,7 @@ public class Turret extends SubsystemBase {
 
     public void trackTarget(double tx) {
         if (!Double.isFinite(tx)) {
-            double currentTurns = getTurns();
-
-            if (currentTurns >= MAX_TURNS) scanPower = -0.1;
-            if (currentTurns <= MIN_TURNS) scanPower = 0.1;
-
-            turretMotor.set(scanPower);
+            stop();
             return;
         }
 
@@ -41,7 +36,7 @@ public class Turret extends SubsystemBase {
             return;
         }
 
-        double desiredTurns = getTurns() + (tx * 0.001);
+        double desiredTurns = setpoint + (tx * 0.001);
         setTurns(desiredTurns);
     }
 
@@ -56,23 +51,28 @@ public class Turret extends SubsystemBase {
         double clockwiseDistance = targetTurns - currentTurns;
         double counterclockwiseDistance = currentTurns - targetTurns;
 
-        boolean clockwiseSafe = targetTurns >= currentTurns && targetTurns <= MAX_TURNS;
-        boolean counterclockwiseSafe = targetTurns <= currentTurns && targetTurns >= MIN_TURNS;
+        boolean clockwiseSafe = targetTurns > currentTurns && targetTurns <= MAX_TURNS;
+        boolean counterclockwiseSafe = targetTurns < currentTurns && targetTurns >= MIN_TURNS;
 
-        if (!clockwiseSafe && !counterclockwiseSafe) {
+        if (Math.abs(targetTurns - currentTurns) <= TOLERANCE) {
             stop();
             return;
         }
 
+        if (clockwiseSafe) {
+            moveTo(targetTurns, currentTurns);
+        } else if (counterclockwiseSafe) {
+            moveTo(targetTurns, currentTurns);
+        } else {
+            stop();
+        }
+    }
+
+    private void moveTo(double targetTurns, double currentTurns) {
         double error = targetTurns - currentTurns;
-        double power = error * kP;
+        double power = error * KP;
 
         power = Math.max(-MAX_POWER, Math.min(MAX_POWER, power));
-
-        if (Math.abs(error) < 0.01) {
-            stop();
-            return;
-        }
 
         turretMotor.set(power);
     }
