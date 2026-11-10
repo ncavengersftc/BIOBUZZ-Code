@@ -43,7 +43,7 @@ public class Vision extends SubsystemBase {
     public double getTx() {
         LLResult result = limelight.getLatestResult();
 
-        if (result == null || !result.isValid()) {
+        if (result == null || !result.isValid() || Double.isInfinite(result.getTx())) {
             return Double.NaN;
         }
 
