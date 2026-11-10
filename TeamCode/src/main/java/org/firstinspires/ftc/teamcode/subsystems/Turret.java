@@ -8,65 +8,50 @@ import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 public class Turret extends SubsystemBase {
 
     private final MotorEx turretMotor;
-
-    private static final double TICKS_PER_TURN = 537.7;
-    private static final double MIN_TURNS = -0.46;
-    private static final double MAX_TURNS = 0.46;
-    private static final double KP = 0.8;
-    private static final double MAX_POWER = 0.25;
-
-    private double setpoint = 0;
+    private static final double GEAR_RATIO = 1.0; // NEED TO CHANGE
+    private static final double MAX_DEG = 540.0; // NEED TO CHANGE (540 degrees is like 1.5 turns)
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
-        turretMotor.setRunMode(Motor.RunMode.RawPower);
+        turretMotor.setRunMode(Motor.RunMode.PositionControl);
+        // ticks to degrees
+        turretMotor.setDistancePerPulse(360.0 / (turretMotor.getCPR() * GEAR_RATIO));
+        // motor initialization
+        turretMotor.setPositionCoefficient(0.01);
+        turretMotor.setPositionTolerance(2.0);
+        turretMotor.resetEncoder();
     }
 
     public void trackTarget(double tx) {
-        if (!Double.isFinite(tx)) {
-            stop();
-            return;
+        if (Math.abs(tx) > 0.5) {
+            // If turret spins away from hive, change - to +
+            setTargetAngle(turretMotor.getDistance() - tx);
         }
-
-        if (Math.abs(tx) < 1.0) {
-            stop();
-            return;
-        }
-
-        setTurns(setpoint + tx * 0.001);
     }
 
-    public void setTurns(double turns) {
-        setpoint = Math.max(MIN_TURNS, Math.min(MAX_TURNS, turns));
-        goToTurns(setpoint);
-    }
+    public void setTargetAngle(double targetDegrees) {
+        double currentDeg = turretMotor.getDistance();
+        double targetDeg = currentDeg + Math.IEEEremainder(targetDegrees - currentDeg, 360.0);
 
-    public void goToTurns(double targetTurns) {
-        double currentTurns = getTurns();
-        double error = targetTurns - currentTurns;
+        // Subtracts 360 degrees so that if it is past limit, it rotates backwards to reach setpoint
+        while (targetDeg > MAX_DEG) targetDeg -= 360.0;
+        while (targetDeg < -MAX_DEG) targetDeg += 360.0;
 
-        if (Math.abs(error) < 0.01) {
-            stop();
-            return;
-        }
-
-        if (currentTurns >= MAX_TURNS && error > 0) {
-            setpoint = MIN_TURNS;
-        } else if (currentTurns <= MIN_TURNS && error < 0) {
-            setpoint = MAX_TURNS;
-        }
-
-        error = setpoint - currentTurns;
-        double power = Math.max(-MAX_POWER, Math.min(MAX_POWER, error * KP));
-
-        turretMotor.set(power);
+        turretMotor.setTargetDistance(targetDeg);
     }
 
     public double getTurns() {
-        return turretMotor.getCurrentPosition() / TICKS_PER_TURN;
+        return turretMotor.getCurrentPosition();
     }
 
     public void stop() {
         turretMotor.stopMotor();
+    }
+
+    @Override
+    public void periodic() {
+        super.periodic();
+        // Turret max speed limit is 80%
+        turretMotor.set(0.6);
     }
 }
