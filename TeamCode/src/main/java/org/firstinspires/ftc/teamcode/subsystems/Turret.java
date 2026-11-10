@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,10 +12,8 @@ public class Turret extends SubsystemBase {
     private static final double TICKS_PER_TURN = 537.7;
     private static final double MIN_TURNS = -0.46;
     private static final double MAX_TURNS = 0.46;
-
     private static final double KP = 0.8;
     private static final double MAX_POWER = 0.25;
-    private static final double TOLERANCE = 0.01;
 
     private double setpoint = 0;
 
@@ -36,8 +33,7 @@ public class Turret extends SubsystemBase {
             return;
         }
 
-        double desiredTurns = setpoint + (tx * 0.001);
-        setTurns(desiredTurns);
+        setTurns(setpoint + tx * 0.001);
     }
 
     public void setTurns(double turns) {
@@ -47,32 +43,21 @@ public class Turret extends SubsystemBase {
 
     public void goToTurns(double targetTurns) {
         double currentTurns = getTurns();
+        double error = targetTurns - currentTurns;
 
-        double clockwiseDistance = targetTurns - currentTurns;
-        double counterclockwiseDistance = currentTurns - targetTurns;
-
-        boolean clockwiseSafe = targetTurns > currentTurns && targetTurns <= MAX_TURNS;
-        boolean counterclockwiseSafe = targetTurns < currentTurns && targetTurns >= MIN_TURNS;
-
-        if (Math.abs(targetTurns - currentTurns) <= TOLERANCE) {
+        if (Math.abs(error) < 0.01) {
             stop();
             return;
         }
 
-        if (clockwiseSafe) {
-            moveTo(targetTurns, currentTurns);
-        } else if (counterclockwiseSafe) {
-            moveTo(targetTurns, currentTurns);
-        } else {
-            stop();
+        if (currentTurns >= MAX_TURNS && error > 0) {
+            setpoint = MIN_TURNS;
+        } else if (currentTurns <= MIN_TURNS && error < 0) {
+            setpoint = MAX_TURNS;
         }
-    }
 
-    private void moveTo(double targetTurns, double currentTurns) {
-        double error = targetTurns - currentTurns;
-        double power = error * KP;
-
-        power = Math.max(-MAX_POWER, Math.min(MAX_POWER, power));
+        error = setpoint - currentTurns;
+        double power = Math.max(-MAX_POWER, Math.min(MAX_POWER, error * KP));
 
         turretMotor.set(power);
     }
