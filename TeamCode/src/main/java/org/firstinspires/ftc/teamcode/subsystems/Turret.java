@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,40 +14,65 @@ public class Turret extends SubsystemBase {
     private static final double MIN_TURNS = -0.46;
     private static final double MAX_TURNS = 0.46;
 
+    private static final double kP = 0.001;
+    private static final double MAX_POWER = 0.25;
+
+    private double setpoint = 0;
     private double scanPower = 0.1;
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
-        turretMotor.setRunMode(Motor.RunMode.PositionControl);
-        turretMotor.setPositionCoefficient(0.001);
-        turretMotor.setPositionTolerance(10);
-
+        turretMotor.setRunMode(Motor.RunMode.RawPower);
     }
 
     public void trackTarget(double tx) {
-        double currentTurns = getTurns();
-
-        // No tag detected: scan back and forth
         if (!Double.isFinite(tx)) {
+            double currentTurns = getTurns();
+
             if (currentTurns >= MAX_TURNS) scanPower = -0.1;
             if (currentTurns <= MIN_TURNS) scanPower = 0.1;
+
             turretMotor.set(scanPower);
             return;
         }
 
-        // Stop when tag is centered
         if (Math.abs(tx) < 1.0) {
             stop();
             return;
         }
 
-        // Calculate tracking power
-        double power = tx * 0.015;
-        power = Math.max(-0.25, Math.min(0.25, power));
+        double desiredTurns = getTurns() + (tx * 0.001);
+        setTurns(desiredTurns);
+    }
 
-        // Reverse direction at rotation limits
-        if (currentTurns >= MAX_TURNS && power > 0) power = -0.3;
-        if (currentTurns <= MIN_TURNS && power < 0) power = 0.3;
+    public void setTurns(double turns) {
+        setpoint = Math.max(MIN_TURNS, Math.min(MAX_TURNS, turns));
+        goToTurns(setpoint);
+    }
+
+    public void goToTurns(double targetTurns) {
+        double currentTurns = getTurns();
+
+        double clockwiseDistance = targetTurns - currentTurns;
+        double counterclockwiseDistance = currentTurns - targetTurns;
+
+        boolean clockwiseSafe = targetTurns >= currentTurns && targetTurns <= MAX_TURNS;
+        boolean counterclockwiseSafe = targetTurns <= currentTurns && targetTurns >= MIN_TURNS;
+
+        if (!clockwiseSafe && !counterclockwiseSafe) {
+            stop();
+            return;
+        }
+
+        double error = targetTurns - currentTurns;
+        double power = error * kP;
+
+        power = Math.max(-MAX_POWER, Math.min(MAX_POWER, power));
+
+        if (Math.abs(error) < 0.01) {
+            stop();
+            return;
+        }
 
         turretMotor.set(power);
     }
