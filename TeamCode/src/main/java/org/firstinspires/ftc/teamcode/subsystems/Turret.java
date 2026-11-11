@@ -9,7 +9,7 @@ public class Turret extends SubsystemBase {
 
     private final MotorEx turretMotor;
     private static final double GEAR_RATIO = 1.0; // NEED TO CHANGE
-    private static final double MAX_DEG = 540.0; // NEED TO CHANGE (540 degrees is like 1.5 turns)
+    private static final double MAX_DEG = 100; // NEED TO CHANGE (540 degrees is like 1.5 turns)
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
