@@ -29,6 +29,9 @@ public class BasicAuto extends OpMode{
         frontRight = hardwareMap.get(DcMotor.class, "Front Right Motor");
         backRight = hardwareMap.get(DcMotor.class, "Back Right Motor");
 
+        transfer = new Transfer(hardwareMap);
+        shooter = new Shooter(hardwareMap);
+
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
