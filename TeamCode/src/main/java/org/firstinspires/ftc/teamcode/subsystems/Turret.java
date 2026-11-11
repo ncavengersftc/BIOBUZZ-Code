@@ -40,12 +40,15 @@ public class Turret extends SubsystemBase {
         turretMotor.setTargetDistance(targetDeg);
     }
 
+    public void setTargetTurns(double targetTurns) {
+        setTargetAngle(targetTurns * 360.0);
+    }
+
     public double getTurns() {
         return turretMotor.getCurrentPosition();
     }
 
-    public void stop() {
-        turretMotor.stopMotor();
+    public void stop() {turretMotor.stopMotor();
     }
 
     @Override

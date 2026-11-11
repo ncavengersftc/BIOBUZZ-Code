@@ -11,10 +11,8 @@ public class RotateTurret extends CommandBase {
         this.turret = turret;
         addRequirements(turret);
     }
-
-    @Override
-    public void execute() {
-        turret.setTargetTurns(0.25);
-    }
+     public void execute(){
+        turret.setTargetAngle(0.25);
+     }
 }
 
