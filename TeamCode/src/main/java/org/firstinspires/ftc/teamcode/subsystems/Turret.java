@@ -8,7 +8,7 @@ import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 public class Turret extends SubsystemBase {
 
     private final MotorEx turretMotor;
-    private static final double GEAR_RATIO = 1.0; // NEED TO CHANGE
+    private static final double GEAR_RATIO = 2.75; // NEED TO CHANGE
     private static final double MAX_DEG = 100; // NEED TO CHANGE (540 degrees is like 1.5 turns)
 
     public Turret(HardwareMap hardwareMap) {
