@@ -11,7 +11,7 @@ public class Shooter extends SubsystemBase {
 
     public Shooter(HardwareMap hMap) {
         shooterMotor = new MotorEx(hMap, "Shooter Motor", 28.0, 6000.0);
-        shooterMotor.setRunMode(Motor.RunMode.PositionControl);
+        shooterMotor.setRunMode(Motor.RunMode.VelocityControl);
     }
 
     public void shoot (double power){
