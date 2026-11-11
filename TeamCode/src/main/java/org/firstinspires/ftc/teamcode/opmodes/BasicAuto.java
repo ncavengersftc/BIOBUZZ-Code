@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.subsystems.Transfer;
+
 @Autonomous
 public class BasicAuto extends OpMode{
     static final double ticksPerRevolution = 537.7;
@@ -16,6 +19,8 @@ public class BasicAuto extends OpMode{
     private DcMotor frontRight;
     private  DcMotor backRight;
     private DcMotor backLeft;
+    private Transfer transfer;
+    private Shooter shooter;
 
     @Override
     public void init() {
@@ -38,9 +43,16 @@ public class BasicAuto extends OpMode{
         backLeft.setTargetPosition(backLeft.getCurrentPosition() + target);
         frontRight.setTargetPosition(frontRight.getCurrentPosition() + target);
         backRight.setTargetPosition(backRight.getCurrentPosition() + target);
+
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     @Override
     public void start(){
+        transfer.turn(0.5);
+        shooter.shoot(0.5);
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
