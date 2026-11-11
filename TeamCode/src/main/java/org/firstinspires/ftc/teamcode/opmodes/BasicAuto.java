@@ -70,6 +70,8 @@ public class BasicAuto extends OpMode{
             backLeft.setPower(0);
             backRight.setPower(0);
             frontRight.setPower(0);
+            shooter.stop();
+            transfer.stop();
         }
     }
 }
