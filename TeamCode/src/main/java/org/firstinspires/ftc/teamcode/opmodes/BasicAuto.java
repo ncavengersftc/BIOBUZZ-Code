@@ -53,7 +53,7 @@ public class BasicAuto extends OpMode{
     }
     @Override
     public void loop(){
-        if(!frontLeft.isBusy()){
+        if(!frontLeft.isBusy()&&!frontRight.isBusy()&&!backLeft.isBusy()&&!backRight.isBusy()){
             frontLeft.setPower(0);
             backLeft.setPower(0);
             backRight.setPower(0);
