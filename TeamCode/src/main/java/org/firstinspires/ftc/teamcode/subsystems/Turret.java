@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
@@ -8,55 +9,71 @@ import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 public class Turret extends SubsystemBase {
 
     private final MotorEx turretMotor;
-    private static final double GEAR_RATIO = 2.75; // NEED TO CHANGE
-    private static final double MAX_DEG = 50; // NEED TO CHANGE (540 degrees is like 1.5 turns)
+    private static final double GEAR_RATIO = 2.7;
+    private static final double MIN_DEG = -360.0;
+    private static final double MAX_DEG = 360.0;
+
+    private double targetAngle = 0.0;
+    private boolean isEnabled = true;
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
-        turretMotor.setRunMode(Motor.RunMode.PositionControl);
-        // ticks to degrees
+        turretMotor.resetEncoder();
+        turretMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        
+        // Convert ticks to degrees
         turretMotor.setDistancePerPulse(360.0 / (turretMotor.getCPR() * GEAR_RATIO));
-        // motor initialization
+        
+        // Configure PositionControl PID
+        turretMotor.setRunMode(Motor.RunMode.PositionControl);
         turretMotor.setPositionCoefficient(0.01);
         turretMotor.setPositionTolerance(2.0);
-        turretMotor.resetEncoder();
+        turretMotor.setTargetDistance(0.0);
     }
 
+    // Adjusts turret based on vision horizontal offset (tx)
     public void trackTarget(double tx) {
-        if (Math.abs(tx) > 0.5) {
-            // If turret spins away from hive, change - to +
-            setTargetAngle(turretMotor.getDistance() - tx);
+        // Change - to + if it spins the wrong way
+        if (Math.abs(tx) > 2.0) {
+            setTargetAngle(getAngle() - tx);
         }
     }
 
-    public void setTargetAngle(double targetDegrees) {
-        double currentDeg = turretMotor.getDistance();
-        double targetDeg = currentDeg + Math.IEEEremainder(targetDegrees - currentDeg, 360.0);
+    // Clamps target angle within safe cable limits
+    public void setTargetAngle(double desiredDegrees) {
+        isEnabled = true;
+        targetAngle = Range.clip(desiredDegrees, MIN_DEG, MAX_DEG);
+    }
 
-        // Subtracts 360 degrees so that if it is past limit, it rotates backwards to reach setpoint
-        while (targetDeg > MAX_DEG) targetDeg -= 360.0;
-        while (targetDeg < -MAX_DEG) targetDeg += 360.0;
-
-        turretMotor.setTargetDistance(targetDeg);
+    // Use to control turret manually
+    public void changeAngleBy(double deltaDegrees) {
+        setTargetAngle(targetAngle + deltaDegrees);
     }
 
     public void setTargetTurns(double targetTurns) {
         setTargetAngle(targetTurns * 360.0);
     }
 
-    public double getTurns() {
-        return turretMotor.getCurrentPosition();
+    public double getAngle() {
+        return turretMotor.getDistance();
     }
 
-    public void stop() {turretMotor.stopMotor();
+    public double getTurns() {
+        return getAngle() / 360.0;
+    }
+
+    public void stop() {
+        isEnabled = false;
+        turretMotor.stopMotor();
     }
 
     @Override
     public void periodic() {
         super.periodic();
-        // Turret max speed limit is 60%
-        turretMotor.set(0.6);
+        if (isEnabled) {
+            turretMotor.setTargetDistance(targetAngle);
+            // Updates internal P-controller and caps max speed at 60%
+            turretMotor.set(0.6); 
+        }
     }
-
-
 }
