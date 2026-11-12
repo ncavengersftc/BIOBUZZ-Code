@@ -8,8 +8,8 @@ import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 public class Turret extends SubsystemBase {
 
     private final MotorEx turretMotor;
-    private static final double GEAR_RATIO = 1.0; // NEED TO CHANGE
-    private static final double MAX_DEG = 540.0; // NEED TO CHANGE (540 degrees is like 1.5 turns)
+    private static final double GEAR_RATIO = 2.75; // NEED TO CHANGE
+    private static final double MAX_DEG = 50; // NEED TO CHANGE (540 degrees is like 1.5 turns)
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
@@ -40,12 +40,15 @@ public class Turret extends SubsystemBase {
         turretMotor.setTargetDistance(targetDeg);
     }
 
+    public void setTargetTurns(double targetTurns) {
+        setTargetAngle(targetTurns * 360.0);
+    }
+
     public double getTurns() {
         return turretMotor.getCurrentPosition();
     }
 
-    public void stop() {
-        turretMotor.stopMotor();
+    public void stop() {turretMotor.stopMotor();
     }
 
     @Override
