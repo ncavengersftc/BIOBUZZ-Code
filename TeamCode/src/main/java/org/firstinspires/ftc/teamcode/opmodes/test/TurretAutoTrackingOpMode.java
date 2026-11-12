@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Turret;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
 @TeleOp (name = "TurretOpMode", group = "Test")
-public class TurretOpMode extends CommandOpMode {
+public class TurretAutoTrackingOpMode extends CommandOpMode {
     private Turret turret;
     private Vision vision;
 
