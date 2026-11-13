@@ -24,10 +24,10 @@ public class DriveCommand extends CommandBase {
     @Override
     public void execute() {
         double turn =
-                (driverOp.getButton(GamepadKeys.Button.RIGHT_BUMPER) ? 0.4 : 0)
-                        - (driverOp.getButton(GamepadKeys.Button.LEFT_BUMPER) ? 0.4 : 0);
+                driverOp.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)
+                        - driverOp.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
 
-        drive.drive(driverOp.getRightX(), driverOp.getRightY(), turn);
+        drive.drive(-driverOp.getRightX(), driverOp.getRightY(), turn);
     }
 
 }
