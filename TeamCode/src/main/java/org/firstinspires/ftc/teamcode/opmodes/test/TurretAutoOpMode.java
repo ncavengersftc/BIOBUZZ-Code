@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Turret;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
 @TeleOp (name = "TurretOpMode", group = "Test")
-public class TurretOpMode extends CommandOpMode {
+public class TurretAutoOpMode extends CommandOpMode {
     private Turret turret;
     private Vision vision;
 
@@ -34,7 +34,7 @@ public class TurretOpMode extends CommandOpMode {
     public void run (){
         super.run();
         turret.trackTarget(vision.getTx());
-        telemetry.addData("Turret Turns", turret.getTurns());
+        telemetry.addData("Turret Degrees", turret.getAngle());
         telemetry.update();
     }
 }
