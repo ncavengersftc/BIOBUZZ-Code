@@ -19,11 +19,9 @@ public class DriveOpMode extends CommandOpMode {
 
         GamepadEx driverOp = new GamepadEx(gamepad1);
 
-        drive.setDefaultCommand(
-                new DriveCommand(telemetry, drive, driverOp)
-        );
-
+        // Register BEFORE setting default command or else doesn't work
         register(drive);
+        drive.setDefaultCommand(new DriveCommand(telemetry, drive, driverOp));
     }
 
     @Override
