@@ -1,29 +1,29 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.seattlesolvers.solverslib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
 @Autonomous
-public class BasicAuto extends OpMode{
+public class BasicAuto extends CommandOpMode {
     static final double ticksPerRevolution = 537.7;
     static final double wheelDiameter = 4.0945;
     static final double gearReduction = 1;
-    static final double countsPerInch = (ticksPerRevolution * gearReduction) /(wheelDiameter* Math.PI);
-    static final int target = (int) Math.round(2.0 *countsPerInch );
+    static final double countsPerInch = (ticksPerRevolution * gearReduction) / (wheelDiameter * Math.PI);
+    static final int target = (int) Math.round (2.0 *countsPerInch );
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private  DcMotor backRight;
     private DcMotor backLeft;
     private Transfer transfer;
     private Shooter shooter;
-
+    private boolean started = false;
     @Override
-    public void init() {
+    public void initialize () {
         frontLeft = hardwareMap.get(DcMotor.class, "Front Left Motor");
         backLeft = hardwareMap.get(DcMotor.class, "Back Left Motor");
         frontRight = hardwareMap.get(DcMotor.class, "Front Right Motor");
@@ -53,21 +53,24 @@ public class BasicAuto extends OpMode{
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     @Override
-    public void start(){
-        transfer.turn(0.5);
-        shooter.shoot(0.5);
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    public void run() {
+        super.run();
 
-        frontLeft.setPower(0.7);
-        backLeft.setPower(0.7);
-        frontRight.setPower(0.7);
-        backRight.setPower(0.7);
-    }
-    @Override
-    public void loop(){
+        if (!started) {
+            transfer.turn(0.5);
+            shooter.shoot(0.5);
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            frontLeft.setPower(0.7);
+            backLeft.setPower(0.7);
+            frontRight.setPower(0.7);
+            backRight.setPower(0.7);
+            started = true;
+        }
+
         if(!frontLeft.isBusy()&&!frontRight.isBusy()&&!backLeft.isBusy()&&!backRight.isBusy()){
             frontLeft.setPower(0);
             backLeft.setPower(0);
