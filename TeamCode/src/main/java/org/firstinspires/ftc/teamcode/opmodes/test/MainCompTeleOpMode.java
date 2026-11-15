@@ -35,6 +35,8 @@ public class MainCompTeleOpMode extends CommandOpMode {
         driver = new GamepadEx(gamepad1);
         attachment = new GamepadEx(gamepad2);
 
+        register(drive, intake,transfer, shooter,turret);
+
         intake = new Intake(hardwareMap);
         intake.setDefaultCommand(new StopIntake(intake));
 
@@ -49,8 +51,6 @@ public class MainCompTeleOpMode extends CommandOpMode {
 
         drive = new Drive(hardwareMap);
         drive.setDefaultCommand(new DriveCommand(telemetry, drive, driver));
-
-        register(drive, intake,transfer, shooter,turret);
 
         attachment.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(new IntakePollen(intake));
