@@ -47,10 +47,10 @@ public class MainCompTeleOpMode extends CommandOpMode {
         turret = new Turret(hardwareMap);
         turret.setDefaultCommand(new StopTurret(turret));
 
-        register(drive, intake,transfer, shooter,turret);
-
         drive = new Drive(hardwareMap);
         drive.setDefaultCommand(new DriveCommand(telemetry, drive, driver));
+
+        register(drive, intake,transfer, shooter,turret);
 
         attachment.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(new IntakePollen(intake));
