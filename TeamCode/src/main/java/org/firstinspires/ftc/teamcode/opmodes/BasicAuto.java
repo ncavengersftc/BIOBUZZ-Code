@@ -15,7 +15,7 @@ public class BasicAuto extends CommandOpMode {
     static final double wheelDiameter = 4.0945;
     static final double gearReduction = 1;
     static final double countsPerInch = (ticksPerRevolution * gearReduction) / (wheelDiameter * Math.PI);
-    static final int target = (int) Math.round (2.0 *countsPerInch );
+    static final int target = (int) Math.round (4.0 *countsPerInch);
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private  DcMotor backRight;
