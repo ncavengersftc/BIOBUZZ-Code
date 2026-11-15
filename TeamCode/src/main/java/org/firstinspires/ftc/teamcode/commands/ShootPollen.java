@@ -4,7 +4,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 public class ShootPollen extends CommandBase {
     private final Shooter shooter;
     public ShootPollen(Shooter shooter) {
+
         this.shooter = shooter;
+
         addRequirements(shooter);
     }
     @Override

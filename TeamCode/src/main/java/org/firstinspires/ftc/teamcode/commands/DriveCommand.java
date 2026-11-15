@@ -13,7 +13,7 @@ public class DriveCommand extends CommandBase {
 
     private final GamepadEx driverOp;
 
-    public DriveCommand(Telemetry telemetry, Drive drive, GamepadEx driverOp) {
+    public DriveCommand(Drive drive, GamepadEx driverOp) {
         this.drive = drive;
 
         this.driverOp = driverOp;

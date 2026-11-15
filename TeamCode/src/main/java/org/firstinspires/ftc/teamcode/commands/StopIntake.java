@@ -4,7 +4,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 public class StopIntake extends CommandBase {
     private final Intake intake;
     public StopIntake(Intake intake) {
+
         this.intake = intake;
+
         addRequirements(intake);
     }
     @Override

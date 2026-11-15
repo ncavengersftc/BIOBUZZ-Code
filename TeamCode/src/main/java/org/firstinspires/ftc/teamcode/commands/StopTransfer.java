@@ -5,7 +5,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 public class StopTransfer extends CommandBase {
     private final Transfer transfer;
     public StopTransfer(Transfer transfer) {
+
         this.transfer = transfer;
+
         addRequirements(transfer);
     }
     @Override

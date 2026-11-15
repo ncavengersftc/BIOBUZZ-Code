@@ -4,7 +4,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 public class IntakePollen extends CommandBase {
     private final Intake intake;
     public IntakePollen(Intake intake) {
+
         this.intake = intake;
+
         addRequirements(intake);
     }
 

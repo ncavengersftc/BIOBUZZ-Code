@@ -29,13 +29,10 @@ public class Vision extends SubsystemBase {
 
         // The angle to the april tags
         double limelightToTargetDegrees = result.getTy();
-
         // Calculate angle to target
         double angleToGoalDegrees = mountAngle + limelightToTargetDegrees;
-
         // Convert degrees to radians
         double angleToGoalRadians = Math.toRadians(angleToGoalDegrees);
-
         // Calculate horizontal distance in inches
         return (heightOfTarget - heightFromGround) / Math.tan(angleToGoalRadians);
     }
