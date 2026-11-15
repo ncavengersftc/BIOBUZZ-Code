@@ -41,6 +41,8 @@ public class MainCompTeleOpMode extends CommandOpMode {
         turret = new Turret(hardwareMap);
         drive = new Drive(hardwareMap);
 
+        //register before default commands so that it should work
+
         register(drive, intake,transfer, shooter,turret);
 
         intake.setDefaultCommand(new StopIntake(intake));
