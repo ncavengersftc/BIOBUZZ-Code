@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.subsystems.Turret;
+@TeleOp
 
 public class MainCompTeleOpMode extends CommandOpMode {
     private GamepadEx driver;
@@ -28,7 +30,8 @@ public class MainCompTeleOpMode extends CommandOpMode {
     private Turret turret;
     private Drive drive;
 
-    @Override public void initialize(){
+    @Override
+    public void initialize(){
         driver = new GamepadEx(gamepad1);
         attachment = new GamepadEx(gamepad2);
 
@@ -44,23 +47,30 @@ public class MainCompTeleOpMode extends CommandOpMode {
         turret = new Turret(hardwareMap);
         turret.setDefaultCommand(new StopTurret(turret));
 
+        register(drive);
+        register(intake,transfer, shooter,turret);
+
         drive = new Drive(hardwareMap);
         drive.setDefaultCommand(new DriveCommand(telemetry, drive, driver));
 
         attachment.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new IntakePollen(intake));
+                .toggleWhenPressed(new IntakePollen(intake));
 
         attachment.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new ShootPollen(shooter));
+                .toggleWhenPressed(new ShootPollen(shooter));
 
         attachment.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(new TransferPollen(transfer));
+                .toggleWhenPressed(new TransferPollen(transfer));
 
         attachment.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new RotateTurret(turret));
+                .toggleWhenPressed(new RotateTurret(turret));
 
-        register(drive);
-        register(intake,transfer, shooter,turret);
     }
+
+    @Override
+    public void run(){
+        super.run();
+    }
+
 
 }
