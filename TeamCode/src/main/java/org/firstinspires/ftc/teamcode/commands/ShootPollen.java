@@ -9,6 +9,6 @@ public class ShootPollen extends CommandBase {
     }
     @Override
     public void execute() {
-        shooter.shoot(0.25);
+        shooter.shoot(25);
     }
 }
