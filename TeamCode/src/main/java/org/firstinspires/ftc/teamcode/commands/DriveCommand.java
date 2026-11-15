@@ -27,7 +27,7 @@ public class DriveCommand extends CommandBase {
                 driverOp.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)
                         - driverOp.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
 
-        drive.drive(-driverOp.getRightX(), driverOp.getRightY(), turn);
+        drive.drive(-driverOp.getLeftX(), driverOp.getRightY(), turn);
     }
 
 }
