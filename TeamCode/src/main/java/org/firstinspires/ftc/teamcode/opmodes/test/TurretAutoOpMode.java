@@ -34,6 +34,7 @@ public class TurretAutoOpMode extends CommandOpMode {
     public void run (){
         super.run();
         turret.trackTarget(vision.getTx());
+
         telemetry.addData("Turret Degrees", turret.getAngle());
         telemetry.update();
     }

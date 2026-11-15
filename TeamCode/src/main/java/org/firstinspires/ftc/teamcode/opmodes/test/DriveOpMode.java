@@ -21,7 +21,7 @@ public class DriveOpMode extends CommandOpMode {
 
         // Register BEFORE setting default command or else doesn't work
         register(drive);
-        drive.setDefaultCommand(new DriveCommand(telemetry, drive, driverOp));
+        drive.setDefaultCommand(new DriveCommand(drive, driverOp));
     }
 
     @Override
