@@ -25,10 +25,11 @@ public class Shooter extends SubsystemBase {
 
 
     public void shoot(double targetVelocity) {
-        double rotationsPerSecond = targetVelocity * 112;
+        double rotationsPerSecond = 25;
+        double targetTicks = rotationsPerSecond * 112;
 
         double currentVelocity = outtakeMotorLeft.getVelocity();
-        double power = pidfController.calculate(currentVelocity, rotationsPerSecond);
+        double power = pidfController.calculate(currentVelocity, targetTicks);
 
         outtakeMotorLeft.setPower(power);
 
