@@ -24,8 +24,7 @@ public class Shooter extends SubsystemBase {
     }
 
 
-    public void shoot(double targetVelocity) {
-        double rotationsPerSecond = 25;
+    public void shoot(double rotationsPerSecond) {
         double targetTicks = rotationsPerSecond * 112;
 
         double currentVelocity = outtakeMotorLeft.getVelocity();
