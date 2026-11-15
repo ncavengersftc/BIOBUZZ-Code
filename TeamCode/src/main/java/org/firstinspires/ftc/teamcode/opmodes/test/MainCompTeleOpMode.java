@@ -47,8 +47,7 @@ public class MainCompTeleOpMode extends CommandOpMode {
         turret = new Turret(hardwareMap);
         turret.setDefaultCommand(new StopTurret(turret));
 
-        register(drive);
-        register(intake,transfer, shooter,turret);
+        register(drive, intake,transfer, shooter,turret);
 
         drive = new Drive(hardwareMap);
         drive.setDefaultCommand(new DriveCommand(telemetry, drive, driver));
