@@ -19,9 +19,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.subsystems.Turret;
-@TeleOp
-
-public class TeleOpMode extends CommandOpMode {
+@TeleOp(name = "MainCompTeleOpMode", group = "Test")
+public class MainCompTeleOpMode extends CommandOpMode {
     private GamepadEx driver;
     private GamepadEx attachment;
     private Intake intake;
@@ -49,7 +48,7 @@ public class TeleOpMode extends CommandOpMode {
         shooter.setDefaultCommand(new StopShooter(shooter));
         transfer.setDefaultCommand(new StopTransfer(transfer));
         turret.setDefaultCommand(new StopTurret(turret));
-        drive.setDefaultCommand(new DriveCommand(drive, driver));
+        drive.setDefaultCommand(new DriveCommand(telemetry, drive, driver));
 
         attachment.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(new IntakePollen(intake));
