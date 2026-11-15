@@ -35,21 +35,18 @@ public class MainCompTeleOpMode extends CommandOpMode {
         driver = new GamepadEx(gamepad1);
         attachment = new GamepadEx(gamepad2);
 
+        intake = new Intake(hardwareMap);
+        shooter = new Shooter(hardwareMap);
+        transfer = new Transfer(hardwareMap);
+        turret = new Turret(hardwareMap);
+        drive = new Drive(hardwareMap);
+
         register(drive, intake,transfer, shooter,turret);
 
-        intake = new Intake(hardwareMap);
         intake.setDefaultCommand(new StopIntake(intake));
-
-        shooter = new Shooter(hardwareMap);
         shooter.setDefaultCommand(new StopShooter(shooter));
-
-        transfer = new Transfer(hardwareMap);
         transfer.setDefaultCommand(new StopTransfer(transfer));
-
-        turret = new Turret(hardwareMap);
         turret.setDefaultCommand(new StopTurret(turret));
-
-        drive = new Drive(hardwareMap);
         drive.setDefaultCommand(new DriveCommand(telemetry, drive, driver));
 
         attachment.getGamepadButton(GamepadKeys.Button.A)
