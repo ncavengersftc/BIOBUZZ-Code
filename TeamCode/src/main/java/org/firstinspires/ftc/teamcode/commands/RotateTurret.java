@@ -22,7 +22,7 @@ public class RotateTurret extends CommandBase {
      * The turret moves at a target angle of 0.25 degrees.
      */
      public void execute(){
-        turret.setTargetAngle(0.25);
+        turret.setTargetAngle(20);
      }
 }
 
