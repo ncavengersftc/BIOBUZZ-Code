@@ -23,7 +23,11 @@ public class Shooter extends SubsystemBase {
         pidfController = new PIDFController(0.001,0.0,0.00,0.0001);
     }
 
-
+    /**
+     *Calculates the power needed using PIDF control to make the shooter motor reach the requested rps.
+     *
+     * @param rotationsPerSecond
+     */
     public void shoot(double rotationsPerSecond) {
         double targetTicks = rotationsPerSecond * 112;
 
@@ -34,6 +38,9 @@ public class Shooter extends SubsystemBase {
 
     }
 
+    /**
+     *Resets the PIDF controller and stops the shooter motor.
+     */
 
     public void stop() {
         pidfController.reset();

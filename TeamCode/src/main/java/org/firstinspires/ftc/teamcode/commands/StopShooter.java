@@ -7,6 +7,10 @@ public class StopShooter extends CommandBase {
         this.shooter = shooter;
         addRequirements(shooter);
     }
+
+    /**
+     * The Shooter starts rotating.
+     */
     @Override
     public void execute() {
         shooter.stop();

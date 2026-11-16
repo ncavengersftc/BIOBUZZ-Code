@@ -29,6 +29,10 @@ public class MainCompTeleOpMode extends CommandOpMode {
     private Turret turret;
     private Drive drive;
 
+    /**
+     * Both gamepads, intake, default commands are being initialized and subsystems are being assigned to a button on the gamepad.
+     */
+
     @Override
     public void initialize(){
         driver = new GamepadEx(gamepad1);
@@ -63,6 +67,10 @@ public class MainCompTeleOpMode extends CommandOpMode {
                 .toggleWhenPressed(new RotateTurret(turret));
 
     }
+
+    /**
+     * Everything that was initialized starts to run.
+     */
 
     @Override
     public void run(){

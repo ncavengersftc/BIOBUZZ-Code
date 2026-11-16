@@ -7,6 +7,10 @@ public class StopOuttake extends CommandBase {
         this.shooter = shooter;
         addRequirements(shooter);
     }
+
+    /**
+     * The Outtake stops rotating.
+     */
     @Override
     public void execute() {
         shooter.stop();

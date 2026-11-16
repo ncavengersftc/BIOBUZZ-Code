@@ -8,6 +8,10 @@ public class StopTransfer extends CommandBase {
         this.transfer = transfer;
         addRequirements(transfer);
     }
+
+    /**
+     * The Transfer servos stop rotating.
+     */
     @Override
     public void execute() {
         transfer.stop();

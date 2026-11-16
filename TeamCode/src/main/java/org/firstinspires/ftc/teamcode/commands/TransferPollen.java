@@ -8,6 +8,10 @@ public class TransferPollen extends CommandBase {
         this.transfer = transfer;
         addRequirements(transfer);
     }
+
+    /**
+     * The transfer servos run at a speed of 25 percent.
+     */
     @Override
     public void execute() {
         transfer.turn(0.25);

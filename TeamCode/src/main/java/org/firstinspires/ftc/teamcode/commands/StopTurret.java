@@ -9,6 +9,10 @@ public class StopTurret extends CommandBase {
         this.turret = turret;
         addRequirements(turret);
     }
+
+    /**
+     * The turret stops rotating.
+     */
     @Override
     public void execute() {
         turret.stop();

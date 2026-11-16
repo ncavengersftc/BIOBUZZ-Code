@@ -21,6 +21,10 @@ public class DriveCommand extends CommandBase {
         addRequirements(drive);
     }
 
+    /**
+     * The Triggers turn (robot centric), and Left joystick strafes, while the right joystick moves forwards/backward
+     */
+
     @Override
     public void execute() {
         double turn =

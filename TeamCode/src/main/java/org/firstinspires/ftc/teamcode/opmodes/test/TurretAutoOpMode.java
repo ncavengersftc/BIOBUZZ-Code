@@ -14,6 +14,10 @@ public class TurretAutoOpMode extends CommandOpMode {
     private Turret turret;
     private Vision vision;
 
+    /**
+     * IMU,vision,turret,telemetry,dashboard is being initialized.
+     */
+
     @Override
     public void initialize() {
         IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -30,6 +34,9 @@ public class TurretAutoOpMode extends CommandOpMode {
         register(turret);
     }
 
+    /**
+     * The turret attempts to track the target using the limelight x angle offset based on the April tag and telemetry returns the degrees of the turret degrees and the angle.
+     */
     @Override
     public void run (){
         super.run();

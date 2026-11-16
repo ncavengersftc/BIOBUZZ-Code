@@ -7,6 +7,10 @@ public class StopIntake extends CommandBase {
         this.intake = intake;
         addRequirements(intake);
     }
+
+    /**
+     * The Intake stops rotating.
+     */
     @Override
     public void execute() {
         intake.stop();

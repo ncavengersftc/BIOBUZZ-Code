@@ -23,6 +23,13 @@ public class Drive extends SubsystemBase {
         drive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
     }
 
+    /**
+     *The robot can strafe, move forward/backward, and turn robot centric.
+     *
+     * @param strafeSpeed
+     * @param forwardSpeed
+     * @param turnSpeed
+     */
     public void drive(double strafeSpeed, double forwardSpeed, double turnSpeed) {
         drive.driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);
     }
