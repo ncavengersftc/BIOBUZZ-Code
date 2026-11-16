@@ -5,6 +5,11 @@ import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 public class StopOuttake extends CommandBase {
     private final Shooter shooter;
 
+    /**
+     * Creates an object of StopOuttake.
+     *
+     * @param shooter (shooter subsystem)
+     */
     public StopOuttake(Shooter shooter) {
 
         this.shooter = shooter;

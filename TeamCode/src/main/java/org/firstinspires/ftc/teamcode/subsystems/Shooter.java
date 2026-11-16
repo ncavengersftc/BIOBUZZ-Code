@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -12,9 +14,13 @@ public class Shooter extends SubsystemBase {
 
     private final PIDFController pidfController;
 
-
-    public Shooter(HardwareMap hMap) {
-        outtakeMotorLeft = hMap.get(DcMotorEx.class, "Shooter Motor");
+    /**
+     * Creates the object Shooter.
+     *
+     * @param hardwareMap (connects java code to the robots physical hardware).
+     */
+    public Shooter(HardwareMap hardwareMap) {
+        outtakeMotorLeft = hardwareMap.get(DcMotorEx.class, "Shooter Motor");
 
 
         outtakeMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -26,7 +32,7 @@ public class Shooter extends SubsystemBase {
     /**
      *Calculates the power needed using PIDF control to make the shooter motor reach the requested rps.
      *
-     * @param rotationsPerSecond
+     * @param rotationsPerSecond (the speed at which the shooter motor should run at).
      */
     public void shoot(double rotationsPerSecond) {
         double targetTicks = rotationsPerSecond * 112;

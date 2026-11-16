@@ -14,6 +14,12 @@ public class Drive extends SubsystemBase {
 
     private final MecanumDrive drive;
 
+    /**
+     *Creates an object of Drive.
+     *
+     * @param hardwareMap (connects java code to the robots physical hardware).
+     */
+
     public Drive(HardwareMap hardwareMap) {
         frontLeft = new MotorEx(hardwareMap, "Front Left Motor", Motor.GoBILDA.RPM_312);
         frontRight = new MotorEx(hardwareMap, "Front Right Motor", Motor.GoBILDA.RPM_312);
@@ -26,9 +32,9 @@ public class Drive extends SubsystemBase {
     /**
      *The robot can strafe, move forward/backward, and turn robot centric.
      *
-     * @param strafeSpeed
-     * @param forwardSpeed
-     * @param turnSpeed
+     * @param strafeSpeed (the speed at which the robot can strafe, which is to move side to side)
+     * @param forwardSpeed (the speed at which the robot can move forward and backwards)
+     * @param turnSpeed (the speed at which the robot can turn)
      */
     public void drive(double strafeSpeed, double forwardSpeed, double turnSpeed) {
         drive.driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);

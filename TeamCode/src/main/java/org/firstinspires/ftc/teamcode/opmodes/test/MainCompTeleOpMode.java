@@ -52,7 +52,7 @@ public class MainCompTeleOpMode extends CommandOpMode {
         shooter.setDefaultCommand(new StopShooter(shooter));
         transfer.setDefaultCommand(new StopTransfer(transfer));
         turret.setDefaultCommand(new StopTurret(turret));
-        drive.setDefaultCommand(new DriveCommand(telemetry, drive, driver));
+        drive.setDefaultCommand(new DriveCommand(drive, driver));
 
         attachment.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(new IntakePollen(intake));

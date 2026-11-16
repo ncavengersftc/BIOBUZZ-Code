@@ -5,6 +5,12 @@ import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 public class ShootPollen extends CommandBase {
     private final Shooter shooter;
 
+    /**
+     * Creates an object of ShootPollen.
+     *
+     * @param shooter (shooter subsystem).
+     */
+
     public ShootPollen(Shooter shooter) {
 
         this.shooter = shooter;

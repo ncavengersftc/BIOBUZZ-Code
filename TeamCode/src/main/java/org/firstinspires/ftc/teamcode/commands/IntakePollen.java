@@ -5,6 +5,11 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 public class IntakePollen extends CommandBase {
     private final Intake intake;
 
+    /**
+     * Creates an object of IntakePollen.
+     *
+     * @param intake (intake subsystem).
+     */
     public IntakePollen(Intake intake) {
 
         this.intake = intake;

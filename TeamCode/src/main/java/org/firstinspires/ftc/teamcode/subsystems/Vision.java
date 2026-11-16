@@ -12,7 +12,11 @@ public class Vision extends SubsystemBase {
     private static final double heightFromGround = 20.0; // Camera height (inches)
     private static final double heightOfTarget = 60.0; // Target height (inches)
 
-
+    /**
+     * Creates the object of vision.
+     *
+     * @param hardwareMap (connects java code to the robots physical hardware).
+     */
     public Vision(HardwareMap hardwareMap) {
         limelight = hardwareMap.get(Limelight3A.class, "Limelight");
         limelight.pipelineSwitch(0);

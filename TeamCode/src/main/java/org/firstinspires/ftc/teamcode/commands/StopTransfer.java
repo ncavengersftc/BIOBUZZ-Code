@@ -6,6 +6,12 @@ import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 public class StopTransfer extends CommandBase {
     private final Transfer transfer;
 
+    /**
+     * Creates an object of StopTransfer.
+     *
+     * @param transfer (transfer subsystem).
+     */
+
     public StopTransfer(Transfer transfer) {
 
         this.transfer = transfer;

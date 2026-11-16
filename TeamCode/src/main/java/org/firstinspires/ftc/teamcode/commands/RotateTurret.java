@@ -6,6 +6,11 @@ import org.firstinspires.ftc.teamcode.subsystems.Turret;
 public class RotateTurret extends CommandBase {
     private final Turret turret;
 
+    /**
+     * Creates an object of RotateTurret.
+     *
+     * @param turret (turret subsystem).
+     */
     public RotateTurret(Turret turret) {
 
         this.turret = turret;
