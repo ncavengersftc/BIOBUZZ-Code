@@ -8,33 +8,45 @@ import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.controller.PIDFController;
 
 public class Shooter extends SubsystemBase {
-    private final DcMotorEx shooterMotor;
+    private final DcMotorEx outtakeMotorLeft;
 
     private final PIDFController pidfController;
 
 
     public Shooter(HardwareMap hMap) {
-        shooterMotor = hMap.get(DcMotorEx.class, "Shooter Motor");
-        shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        outtakeMotorLeft = hMap.get(DcMotorEx.class, "Shooter Motor");
+
+
+        outtakeMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         pidfController = new PIDFController(0.001,0.0,0.00,0.0001);
     }
 
+    /**
+     *Calculates the power needed using PIDF control to make the shooter motor reach the requested rps.
+     *
+     * @param rotationsPerSecond
+     */
+    public void shoot(double rotationsPerSecond) {
+        double targetTicks = rotationsPerSecond * 112;
 
-    public void shoot(double targetVelocity) {
-        double currentVelocity = shooterMotor.getVelocity();
-        double power = pidfController.calculate(currentVelocity, targetVelocity);
+        double currentVelocity = outtakeMotorLeft.getVelocity();
+        double power = pidfController.calculate(currentVelocity, targetTicks);
 
-        shooterMotor.setPower(power);
+        outtakeMotorLeft.setPower(power);
 
     }
 
+    /**
+     *Resets the PIDF controller and stops the shooter motor.
+     */
 
     public void stop() {
         pidfController.reset();
-        shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        outtakeMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        shooterMotor.setPower(0);
+        outtakeMotorLeft.setPower(0);
 
     }
 }
