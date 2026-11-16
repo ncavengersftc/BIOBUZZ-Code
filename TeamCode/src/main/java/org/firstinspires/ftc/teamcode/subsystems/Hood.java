@@ -11,9 +11,19 @@ public class Hood extends SubsystemBase {
         hoodServo = hardwareMap.get(CRServo.class, "Hood Servo");
     }
 
+    /**
+     * Sets the hood servo's power to the value, can control its direction and speed of rotation.
+     *
+     * @param power
+     */
+
     public void turn(double power) {
         hoodServo.setPower(power);
     }
+
+    /**
+     * The Hood stops moving
+     */
 
     public void stop() {
         hoodServo.setPower(0);

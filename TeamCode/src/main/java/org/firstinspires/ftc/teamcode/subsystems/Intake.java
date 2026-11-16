@@ -14,10 +14,18 @@ public class Intake extends SubsystemBase {
 
     }
 
+    /**
+     * Sets the intake motor power to the value, can control its direction and speed of rotation.
+     *
+     * @param power
+     */
     public void intake(double power) {
         intakeMotor.set(power);
     }
 
+    /**
+     * The Intake motor stops rotating, while going on a FLOAT setting.
+     */
 
     public void stop() {
         intakeMotor.set(0);

@@ -12,6 +12,10 @@ public class DriveOpMode extends CommandOpMode {
 
     private Drive drive;
 
+    /**
+     * The drive subsystem, gamepad, and the drive command are being initialized.
+     */
+
     @Override
     public void initialize() {
 
@@ -24,6 +28,9 @@ public class DriveOpMode extends CommandOpMode {
         drive.setDefaultCommand(new DriveCommand(drive, driverOp));
     }
 
+    /**
+     * Drive command starts to run.
+     */
     @Override
     public void run() {
         super.run();

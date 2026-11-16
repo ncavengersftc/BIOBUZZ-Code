@@ -12,6 +12,9 @@ public class IntakePollen extends CommandBase {
         addRequirements(intake);
     }
 
+    /**
+     * The Intake intakes the pollen at a speed of 25 percent.
+     */
     @Override
     public void execute() {
         intake.intake(0.25);

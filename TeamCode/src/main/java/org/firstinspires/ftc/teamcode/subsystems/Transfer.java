@@ -18,11 +18,20 @@ public class Transfer extends SubsystemBase {
 
     }
 
+    /**
+     * Sets the frontLeft, frontRight, and backLeft servos to a specific value.
+     *
+     * @param power
+     */
     public void turn(double power) {
         frontLeftServo.setPower(power);
         frontRightServo.setPower(power);
         backLeftServo.setPower(power);
     }
+
+    /**
+     * The frontLeft, frontRight, and backLeft servo stops rotating.
+     */
 
     public void stop() {
         frontRightServo.setPower(0);

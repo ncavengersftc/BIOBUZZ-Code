@@ -20,6 +20,11 @@ public class Vision extends SubsystemBase {
 
     }
 
+    /**
+     *Calculates the distance to the AprilTag using the Limelight's vertical angle and the known mounting and target heights.
+     *
+     * @return distance to the target in inches, or NaN if no valid target is detected
+     */
     public double getDistance() {
         LLResult result = limelight.getLatestResult();
 
@@ -37,6 +42,11 @@ public class Vision extends SubsystemBase {
         return (heightOfTarget - heightFromGround) / Math.tan(angleToGoalRadians);
     }
 
+    /**
+     *Gets the horizontal offset of the Limelight and target (tx).
+     *
+     * @return horizontal offset in degrees, or NaN if no valid target is detected.
+     */
     public double getTx() {
         LLResult result = limelight.getLatestResult();
 

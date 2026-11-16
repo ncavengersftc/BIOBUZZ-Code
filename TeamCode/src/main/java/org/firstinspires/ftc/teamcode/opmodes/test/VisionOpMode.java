@@ -13,7 +13,9 @@ public class VisionOpMode extends CommandOpMode {
 
     private Vision vision;
 
-
+    /**
+     * The IMU, dashboard, telemetry, and vision is being initialized and Telemetry send a message to the robot saying that its initialized.
+     */
     @Override
     public void initialize() {
         IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -30,6 +32,10 @@ public class VisionOpMode extends CommandOpMode {
 
         register(vision);
     }
+
+    /**
+     * The subsystems that were initialized run.
+     */
 
     @Override
     public void run() {

@@ -11,6 +11,10 @@ public class StopOuttake extends CommandBase {
 
         addRequirements(shooter);
     }
+
+    /**
+     * The Outtake stops rotating.
+     */
     @Override
     public void execute() {
         shooter.stop();

@@ -11,6 +11,10 @@ public class ShootPollen extends CommandBase {
 
         addRequirements(shooter);
     }
+
+    /**
+     * Shooter shoots the pollen at 25 rotations per second.
+     */
     @Override
     public void execute() {
         shooter.shoot(25);
