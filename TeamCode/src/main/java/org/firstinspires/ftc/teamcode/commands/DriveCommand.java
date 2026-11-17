@@ -17,8 +17,8 @@ public class DriveCommand extends CommandBase {
     /**
      * Creates an object of DriveCommand.
      *
-     * @param drive (drive subsystem)
-     * @param driver (gamepad 1 operator)
+     * @param drive Drive subsystem.
+     * @param driver Gamepad 1 operator.
      */
     public DriveCommand(Drive drive, GamepadEx driver) {
         this.drive = drive;

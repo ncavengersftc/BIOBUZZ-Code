@@ -29,7 +29,7 @@ public class Turret extends SubsystemBase {
     /**
      * Creates the object of Turret.
      *
-     * @param hardwareMap (connects java code to the robots physical hardware).
+     * @param hardwareMap Connects java code to the robots physical hardware.
      */
 
     // Constructor
@@ -50,9 +50,9 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     *Checks whether the Limelight detected a valid target and if the target is outside the allowed tolerance, and adjusts the turret's angle to align with it.
+     * Checks whether the Limelight detected a valid target and if the target is outside the allowed tolerance, and adjusts the turret's angle to align with it.
      *
-     * @param tx (the vertical offset of the limelight and the April tag).
+     * @param tx The vertical offset of the limelight and the April tag.
      */
     // Call repeatedly with turret-mounted Limelight tx in degrees.
     public void trackTarget(double tx) {
@@ -67,9 +67,9 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     *Sets the turret to an absolute target angle, checks that the angle is valid and within its limits, and initiates an unwind if the target exceeds those limits.
+     * Sets the turret to an absolute target angle, checks that the angle is valid and within its limits, and initiates an unwind if the target exceeds those limits.
      *
-     * @param degrees (degrees of the target angle).
+     * @param degrees Degrees of the target angle.
      */
 
     // Set an absolute angle from center, unwinding if outside the limits.
@@ -118,7 +118,7 @@ public class Turret extends SubsystemBase {
     /**
      * Manually adjusts the turret's target angle by adding the specified degrees to its current or previous target angle.
      *
-     * @param turnDegrees (the degrees at which the turret should turn).
+     * @param turnDegrees The degrees at which the turret should turn.
      */
     // Increases degrees manually (so use controller buttons).
     public void manualControl(double turnDegrees) {
@@ -128,7 +128,7 @@ public class Turret extends SubsystemBase {
     /**
      * Returns the turret's current angle in degrees based on its encoder position.
      *
-     * @return the turret motor position in degrees
+     * @return The turret motor position in degrees.
      */
     // Returns current motor position in degrees.
     public double getAngle() {
@@ -149,7 +149,7 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     *Runs periodically to control the turret's power and check whether an active unwind movement has finished.
+     * Runs periodically to control the turret's power and check whether an active unwind movement has finished.
      */
     // Called every loop by the Command Scheduler (20 ms)
     @Override

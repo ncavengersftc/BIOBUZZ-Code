@@ -9,7 +9,7 @@ public class TransferPollen extends CommandBase {
     /**
      * Creates an object of TransferPollen.
      *
-     * @param transfer (transfer subsystem).
+     * @param transfer Transfer subsystem.
      */
     public TransferPollen(Transfer transfer) {
 

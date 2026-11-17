@@ -9,7 +9,7 @@ public class RotateTurret extends CommandBase {
     /**
      * Creates an object of RotateTurret.
      *
-     * @param turret (turret subsystem).
+     * @param turret Turret subsystem.
      */
     public RotateTurret(Turret turret) {
 

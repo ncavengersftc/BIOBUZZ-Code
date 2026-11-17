@@ -8,7 +8,7 @@ public class IntakePollen extends CommandBase {
     /**
      * Creates an object of IntakePollen.
      *
-     * @param intake (intake subsystem).
+     * @param intake Intake subsystem.
      */
     public IntakePollen(Intake intake) {
 

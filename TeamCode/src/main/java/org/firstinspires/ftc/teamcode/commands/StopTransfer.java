@@ -9,7 +9,7 @@ public class StopTransfer extends CommandBase {
     /**
      * Creates an object of StopTransfer.
      *
-     * @param transfer (transfer subsystem).
+     * @param transfer Transfer subsystem.
      */
 
     public StopTransfer(Transfer transfer) {

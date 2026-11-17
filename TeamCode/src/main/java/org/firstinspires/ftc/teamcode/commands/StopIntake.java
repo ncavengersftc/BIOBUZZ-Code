@@ -8,7 +8,7 @@ public class StopIntake extends CommandBase {
     /**
      * Creates an object of StopIntake.
      *
-     * @param intake (intake subsystem).
+     * @param intake Intake subsystem.
      */
 
     public StopIntake(Intake intake) {

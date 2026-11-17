@@ -9,7 +9,7 @@ public class StopTurret extends CommandBase {
     /**
      * Creates an object of StopTurret.
      *
-     * @param turret (turret subsystem).
+     * @param turret Turret subsystem.
      */
     public StopTurret(Turret turret) {
 

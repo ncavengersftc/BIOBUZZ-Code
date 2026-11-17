@@ -17,7 +17,7 @@ public class Shooter extends SubsystemBase {
     /**
      * Creates the object Shooter.
      *
-     * @param hardwareMap (connects java code to the robots physical hardware).
+     * @param hardwareMap Connects java code to the robots physical hardware.
      */
     public Shooter(HardwareMap hardwareMap) {
         outtakeMotorLeft = hardwareMap.get(DcMotorEx.class, "Shooter Motor");
@@ -30,9 +30,9 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
-     *Calculates the power needed using PIDF control to make the shooter motor reach the requested rps.
+     * Calculates the power needed using PIDF control to make the shooter motor reach the requested rps.
      *
-     * @param rotationsPerSecond (the speed at which the shooter motor should run at).
+     * @param rotationsPerSecond The speed at which the shooter motor should run at.
      */
     public void shoot(double rotationsPerSecond) {
         double targetTicks = rotationsPerSecond * 112;
@@ -45,7 +45,7 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
-     *Resets the PIDF controller and stops the shooter motor.
+     * Resets the PIDF controller and stops the shooter motor.
      */
 
     public void stop() {

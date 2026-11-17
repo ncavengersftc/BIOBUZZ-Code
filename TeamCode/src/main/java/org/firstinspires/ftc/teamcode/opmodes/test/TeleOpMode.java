@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.subsystems.Turret;
-@TeleOp(name = "MainCompTeleOpMode", group = "Test")
-public class MainCompTeleOpMode extends CommandOpMode {
+@TeleOp(name = "TeleOpMode", group = "Main")
+public class TeleOpMode extends CommandOpMode {
     private GamepadEx driver;
     private GamepadEx attachment;
     private Intake intake;

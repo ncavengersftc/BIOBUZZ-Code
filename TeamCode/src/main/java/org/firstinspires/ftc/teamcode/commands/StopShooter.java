@@ -7,7 +7,7 @@ public class StopShooter extends CommandBase {
     /**
      * Creates an object of StopShooter.
      *
-     * @param shooter (shooter subsystem).
+     * @param shooter Shooter subsystem.
      */
 
     public StopShooter(Shooter shooter) {

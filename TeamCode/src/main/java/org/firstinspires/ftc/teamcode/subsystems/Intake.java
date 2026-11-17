@@ -9,9 +9,9 @@ public class Intake extends SubsystemBase {
     private final MotorEx intakeMotor;
 
     /**
-     * Creates the object of intake.
+     * Creates the object of Intake.
      *
-     * @param hardwareMap (connects java code to the robots physical hardware).
+     * @param hardwareMap Connects java code to the robots physical hardware.
      */
     public Intake(HardwareMap hardwareMap) {
         intakeMotor = new MotorEx(hardwareMap, "Intake Motor", Motor.GoBILDA.RPM_312);
@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
     /**
      * Sets the intake motor power to the value, can control its direction and speed of rotation.
      *
-     * @param power (the power in which the intake motor should run at).
+     * @param power The power in which the intake motor should run at.
      */
     public void intake(double power) {
         intakeMotor.set(power);

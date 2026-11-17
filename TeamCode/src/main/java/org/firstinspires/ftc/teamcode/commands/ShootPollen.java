@@ -8,7 +8,7 @@ public class ShootPollen extends CommandBase {
     /**
      * Creates an object of ShootPollen.
      *
-     * @param shooter (shooter subsystem).
+     * @param shooter Shooter subsystem.
      */
 
     public ShootPollen(Shooter shooter) {
