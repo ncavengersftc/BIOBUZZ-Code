@@ -10,7 +10,11 @@ public class Transfer extends SubsystemBase {
     private final CRServo frontRightServo;
     private final CRServo backLeftServo;
 
-
+    /**
+     * Creates the object of Transfer.
+     *
+     * @param hardwareMap Connects java code to the robots physical hardware.
+     */
     public Transfer(HardwareMap hardwareMap) {
         frontLeftServo = hardwareMap.get(CRServo.class,"Front Left Servo" );
         frontRightServo = hardwareMap.get(CRServo.class, "Front Right Servo");
@@ -18,11 +22,20 @@ public class Transfer extends SubsystemBase {
 
     }
 
+    /**
+     * Sets the frontLeft, frontRight, and backLeft servos to a specific value.
+     *
+     * @param power Power at which the servos in the transfer should run at.
+     */
     public void turn(double power) {
         frontLeftServo.setPower(power);
         frontRightServo.setPower(power);
         backLeftServo.setPower(power);
     }
+
+    /**
+     * The frontLeft, frontRight, and backLeft servo stops rotating.
+     */
 
     public void stop() {
         frontRightServo.setPower(0);

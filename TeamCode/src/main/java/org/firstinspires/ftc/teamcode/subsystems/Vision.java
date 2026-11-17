@@ -12,7 +12,11 @@ public class Vision extends SubsystemBase {
     private static final double heightFromGround = 20.0; // Camera height (inches)
     private static final double heightOfTarget = 60.0; // Target height (inches)
 
-
+    /**
+     * Creates the object of Vision.
+     *
+     * @param hardwareMap Connects java code to the robots physical hardware.
+     */
     public Vision(HardwareMap hardwareMap) {
         limelight = hardwareMap.get(Limelight3A.class, "Limelight");
         limelight.pipelineSwitch(0);
@@ -20,6 +24,11 @@ public class Vision extends SubsystemBase {
 
     }
 
+    /**
+     * Calculates the distance to the AprilTag using the Limelight's vertical angle and the known mounting and target heights.
+     *
+     * @return Distance to the target in inches, or NaN if no valid target is detected.
+     */
     public double getDistance() {
         LLResult result = limelight.getLatestResult();
 
@@ -37,6 +46,11 @@ public class Vision extends SubsystemBase {
         return (heightOfTarget - heightFromGround) / Math.tan(angleToGoalRadians);
     }
 
+    /**
+     * Gets the horizontal offset of the Limelight and target (tx).
+     *
+     * @return Horizontal offset in degrees, or NaN if no valid target is detected.
+     */
     public double getTx() {
         LLResult result = limelight.getLatestResult();
 

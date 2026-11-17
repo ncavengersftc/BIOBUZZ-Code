@@ -4,12 +4,22 @@ import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 public class StopShooter extends CommandBase {
     private final Shooter shooter;
 
+    /**
+     * Creates an object of StopShooter.
+     *
+     * @param shooter Shooter subsystem.
+     */
+
     public StopShooter(Shooter shooter) {
 
         this.shooter = shooter;
 
         addRequirements(shooter);
     }
+
+    /**
+     * The Shooter starts rotating.
+     */
     @Override
     public void execute() {
         shooter.stop();

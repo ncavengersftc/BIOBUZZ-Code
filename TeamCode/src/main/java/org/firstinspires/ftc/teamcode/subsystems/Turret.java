@@ -26,6 +26,11 @@ public class Turret extends SubsystemBase {
         }
     }
 
+    /**
+     * Creates the object of Turret.
+     *
+     * @param hardwareMap Connects java code to the robots physical hardware.
+     */
 
     // Constructor
     public Turret(HardwareMap hardwareMap) {
@@ -44,7 +49,11 @@ public class Turret extends SubsystemBase {
         turretMotor.setTargetDistance(targetAngle);
     }
 
-
+    /**
+     * Checks whether the Limelight detected a valid target and if the target is outside the allowed tolerance, and adjusts the turret's angle to align with it.
+     *
+     * @param tx The vertical offset of the limelight and the April tag.
+     */
     // Call repeatedly with turret-mounted Limelight tx in degrees.
     public void trackTarget(double tx) {
         if (!Double.isFinite(tx)) {
@@ -57,6 +66,11 @@ public class Turret extends SubsystemBase {
         }
     }
 
+    /**
+     * Sets the turret to an absolute target angle, checks that the angle is valid and within its limits, and initiates an unwind if the target exceeds those limits.
+     *
+     * @param degrees Degrees of the target angle.
+     */
 
     // Set an absolute angle from center, unwinding if outside the limits.
     public void setTargetAngle(double degrees) {
@@ -101,19 +115,29 @@ public class Turret extends SubsystemBase {
         isEnabled = true;
     }
 
-
+    /**
+     * Manually adjusts the turret's target angle by adding the specified degrees to its current or previous target angle.
+     *
+     * @param turnDegrees The degrees at which the turret should turn.
+     */
     // Increases degrees manually (so use controller buttons).
     public void manualControl(double turnDegrees) {
         setTargetAngle((isEnabled ? targetAngle : getAngle()) + turnDegrees);
     }
 
-
+    /**
+     * Returns the turret's current angle in degrees based on its encoder position.
+     *
+     * @return The turret motor position in degrees.
+     */
     // Returns current motor position in degrees.
     public double getAngle() {
         return turretMotor.getDistance();
     }
 
-
+    /**
+     * Stops the turret.
+     */
     // Stops the turret.
     public void stop() {
         isEnabled = false;
@@ -124,7 +148,9 @@ public class Turret extends SubsystemBase {
         turretMotor.stopMotor();
     }
 
-
+    /**
+     * Runs periodically to control the turret's power and check whether an active unwind movement has finished.
+     */
     // Called every loop by the Command Scheduler (20 ms)
     @Override
     public void periodic() {

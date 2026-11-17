@@ -19,8 +19,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.subsystems.Turret;
-@TeleOp
-
+@TeleOp(name = "TeleOpMode", group = "Main")
 public class TeleOpMode extends CommandOpMode {
     private GamepadEx driver;
     private GamepadEx attachment;
@@ -29,6 +28,10 @@ public class TeleOpMode extends CommandOpMode {
     private Transfer transfer;
     private Turret turret;
     private Drive drive;
+
+    /**
+     * Both gamepads, intake, default commands are being initialized and subsystems are being assigned to a button on the gamepad.
+     */
 
     @Override
     public void initialize(){
@@ -64,6 +67,10 @@ public class TeleOpMode extends CommandOpMode {
                 .toggleWhenPressed(new RotateTurret(turret));
 
     }
+
+    /**
+     * Everything that was initialized starts to run.
+     */
 
     @Override
     public void run(){
