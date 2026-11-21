@@ -49,7 +49,7 @@ public class Turret extends SubsystemBase {
         turretMotor.setTargetDistance(targetAngle);
     }
 
-    /**
+    /**[
      * Checks whether the Limelight detected a valid target and if the target is outside the allowed tolerance, and adjusts the turret's angle to align with it.
      *
      * @param tx The vertical offset of the limelight and the April tag.
@@ -111,6 +111,7 @@ public class Turret extends SubsystemBase {
         }
 
         targetAngle = degrees;
+        turretMotor.setRunMode(Motor.RunMode.PositionControl);
         turretMotor.setTargetDistance(targetAngle);
         isEnabled = true;
     }
@@ -191,11 +192,22 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * Sends raw power directly to the turret motor (-1.0 to 1.0).
+     * Sends raw power directly to the turret motor (-1.0 to 1.0), respecting MIN and MAX tick limits.
      *
      * @param power The power to send to the turret motor.
      */
     public void setPower(double power) {
+        int currentTicks = getCurrentPosition();
+
+        // Stop motor if attempting to move past max tick limit
+        if (power > 0 && currentTicks >= Constants.TURRET_MAX_TICKS) {
+            power = 0;
+        }
+        // Stop motor if attempting to move past min tick limit
+        else if (power < 0 && currentTicks <= Constants.TURRET_MIN_TICKS) {
+            power = 0;
+        }
+
         turretMotor.setRunMode(Motor.RunMode.RawPower);
         turretMotor.set(power);
         isEnabled = false;
