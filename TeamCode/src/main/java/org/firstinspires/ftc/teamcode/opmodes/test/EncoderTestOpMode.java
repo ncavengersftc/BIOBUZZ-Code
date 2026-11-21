@@ -38,7 +38,7 @@ public class EncoderTestOpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("Intake Position", turret.getCurrentPosition());
+        telemetry.addData("Turret Encoder", turret.getCurrentPosition());
         telemetry.update();
     }
 }
