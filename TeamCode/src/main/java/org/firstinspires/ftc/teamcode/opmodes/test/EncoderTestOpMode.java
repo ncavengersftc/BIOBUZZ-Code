@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.commands.IntakePollen;
 import org.firstinspires.ftc.teamcode.commands.RotateTurret;
 import org.firstinspires.ftc.teamcode.commands.StopIntake;
 import org.firstinspires.ftc.teamcode.commands.StopTurret;
+import org.firstinspires.ftc.teamcode.commands.TestTurret;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Turret;
 
@@ -30,7 +31,7 @@ public class EncoderTestOpMode extends CommandOpMode {
 
         turret.setDefaultCommand(new StopTurret(turret));
         attachment.getGamepadButton(GamepadKeys.Button.B)
-                        .toggleWhenPressed(new RotateTurret(turret));
+                        .toggleWhenPressed(new TestTurret(turret));
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
