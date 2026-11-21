@@ -189,4 +189,24 @@ public class Turret extends SubsystemBase {
     public int getCurrentPosition() {
         return turretMotor.getCurrentPosition();
     }
+
+    /**
+     * Sends raw power directly to the turret motor (-1.0 to 1.0).
+     *
+     * @param power The power to send to the turret motor.
+     */
+    public void setPower(double power) {
+        turretMotor.setRunMode(Motor.RunMode.RawPower);
+        turretMotor.set(power);
+        isEnabled = false;
+    }
+
+    /**
+     * Alias for setPower(power) to send raw power to the turret motor.
+     *
+     * @param power The power to send to the turret motor.
+     */
+    public void turret(double power) {
+        setPower(power);
+    }
 }

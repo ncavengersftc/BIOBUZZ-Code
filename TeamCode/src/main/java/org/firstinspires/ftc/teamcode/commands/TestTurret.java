@@ -18,10 +18,10 @@ public class TestTurret extends CommandBase {
     }
 
     /**
-     * Manually controls the turret rotation.
+     * Sends raw power to the turret motor.
      */
     @Override
     public void execute() {
-        turret.manualControl(0.2);
+        turret.setPower(0.2);
     }
 }
