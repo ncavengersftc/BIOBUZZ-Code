@@ -116,6 +116,24 @@ public class Turret extends SubsystemBase {
     }
 
     /**
+     * Sets the turret to a target position in encoder ticks.
+     *
+     * @param targetTicks Target position in encoder ticks.
+     */
+    public void setTargetTicks(double targetTicks) {
+        if (!Double.isFinite(targetTicks)) {
+            stop();
+            return;
+        }
+
+        // Clamp ticks within tick limits
+        targetTicks = Math.max(Constants.TURRET_MIN_TICKS, Math.min(Constants.TURRET_MAX_TICKS, targetTicks));
+
+        double degreesPerTick = 360.0 / (turretMotor.getCPR() * Constants.TURRET_GEAR_RATIO);
+        setTargetAngle(targetTicks * degreesPerTick);
+    }
+
+    /**
      * Manually adjusts the turret's target angle by adding the specified degrees to its current or previous target angle.
      *
      * @param turnDegrees The degrees at which the turret should turn.
