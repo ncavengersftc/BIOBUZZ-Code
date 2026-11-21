@@ -22,6 +22,6 @@ public class IntakePollen extends CommandBase {
      */
     @Override
     public void execute() {
-        intake.intake(0.001);
+        intake.intake(0.01);
     }
 }
