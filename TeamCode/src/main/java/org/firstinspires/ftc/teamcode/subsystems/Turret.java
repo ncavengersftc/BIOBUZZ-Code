@@ -43,7 +43,7 @@ public class Turret extends SubsystemBase {
         // Feedback and targets now use turret degrees.
         turretMotor.setDistancePerPulse(
                 360.0 / (turretMotor.getCPR() * Constants.TURRET_GEAR_RATIO));
-        turretMotor.setRunMode(Motor.RunMode.PositionControl);
+        turretMotor.setRunMode(Motor.RunMode.RawPower);
         turretMotor.setPositionCoefficient(Constants.TURRET_KP);
         turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_DEG);
         turretMotor.setTargetDistance(targetAngle);
