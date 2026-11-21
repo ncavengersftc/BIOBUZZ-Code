@@ -36,4 +36,13 @@ public class Intake extends SubsystemBase {
         intakeMotor.set(0);
         intakeMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.FLOAT);
     }
+
+    /**
+     * Returns the current encoder position of the intake motor.
+     *
+     * @return Current encoder position in ticks.
+     */
+    public int getCurrentPosition() {
+        return intakeMotor.getCurrentPosition();
+    }
 }
