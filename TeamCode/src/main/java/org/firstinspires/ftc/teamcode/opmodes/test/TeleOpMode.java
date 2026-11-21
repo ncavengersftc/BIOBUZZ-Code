@@ -68,7 +68,7 @@ public class TeleOpMode extends CommandOpMode {
                 .toggleWhenPressed(new TransferPollen(transfer));
 
         attachment.getGamepadButton(GamepadKeys.Button.Y)
-                .toggleWhenPressed(new TestTurret(turret));
+                .toggleWhenPressed(new RotateTurret(turret));
 
     }
 

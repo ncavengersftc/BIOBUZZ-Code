@@ -18,10 +18,10 @@ public class TestTurret extends CommandBase {
     }
 
     /**
-     * Sends raw power to the turret motor.
+     * Oscillates turret between min and max limits, automatically reversing direction at each limit.
      */
     @Override
     public void execute() {
-        turret.setPower(0.2);
+        turret.sweep();
     }
 }

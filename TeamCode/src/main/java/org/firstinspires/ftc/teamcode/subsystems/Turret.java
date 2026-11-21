@@ -209,4 +209,44 @@ public class Turret extends SubsystemBase {
     public void turret(double power) {
         setPower(power);
     }
+
+    private boolean movingForward = true;
+
+    /**
+     * Oscillates the turret back and forth between min and max limits.
+     * When it reaches max, it automatically switches direction toward min, and vice-versa.
+     */
+    public void sweep() {
+        int currentTicks = getCurrentPosition();
+
+        if (movingForward && currentTicks >= Constants.TURRET_MAX_TICKS) {
+            movingForward = false;
+        } else if (!movingForward && currentTicks <= Constants.TURRET_MIN_TICKS) {
+            movingForward = true;
+        }
+
+        if (movingForward) {
+            setTargetTicks(Constants.TURRET_MAX_TICKS);
+        } else {
+            setTargetTicks(Constants.TURRET_MIN_TICKS);
+        }
+    }
+
+    /**
+     * Drives the turret with raw power, automatically reversing direction when hitting max or min limits.
+     *
+     * @param power Magnitude of power (0.0 to 1.0).
+     */
+    public void sweepPower(double power) {
+        int currentTicks = getCurrentPosition();
+
+        if (movingForward && currentTicks >= Constants.TURRET_MAX_TICKS) {
+            movingForward = false;
+        } else if (!movingForward && currentTicks <= Constants.TURRET_MIN_TICKS) {
+            movingForward = true;
+        }
+
+        double activePower = Math.abs(power) * (movingForward ? 1.0 : -1.0);
+        setPower(activePower);
+    }
 }
