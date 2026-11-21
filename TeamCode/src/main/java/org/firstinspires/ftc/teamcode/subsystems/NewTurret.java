@@ -27,6 +27,6 @@ public class NewTurret extends SubsystemBase {
      @Override
      public void periodic(){
          super.periodic();
-         turretMotor.set(0.2);
+         turretMotor.set(0.6);
      }
 }
