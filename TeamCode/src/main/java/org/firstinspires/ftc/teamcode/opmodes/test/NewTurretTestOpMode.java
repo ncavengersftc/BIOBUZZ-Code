@@ -12,7 +12,7 @@ public class NewTurretTestOpMode extends CommandOpMode {
     @Override
     public void initialize(){
         turret = new NewTurret(hardwareMap);
-        turret.setTargetTicks(100);
+        turret.setTargetTicks(50);
 
         register(turret);
     }
