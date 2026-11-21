@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.commands.StopIntake;
 import org.firstinspires.ftc.teamcode.commands.StopShooter;
 import org.firstinspires.ftc.teamcode.commands.StopTransfer;
 import org.firstinspires.ftc.teamcode.commands.StopTurret;
+import org.firstinspires.ftc.teamcode.commands.TestTurret;
 import org.firstinspires.ftc.teamcode.commands.TransferPollen;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -64,7 +65,7 @@ public class TeleOpMode extends CommandOpMode {
                 .toggleWhenPressed(new TransferPollen(transfer));
 
         attachment.getGamepadButton(GamepadKeys.Button.Y)
-                .toggleWhenPressed(new RotateTurret(turret));
+                .toggleWhenPressed(new TestTurret(turret));
 
     }
 
