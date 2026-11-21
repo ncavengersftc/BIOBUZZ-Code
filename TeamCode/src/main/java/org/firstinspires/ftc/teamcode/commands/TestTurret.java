@@ -18,10 +18,10 @@ public class TestTurret extends CommandBase {
     }
 
     /**
-     * Oscillates turret between min and max limits, automatically reversing direction at each limit.
+     * Sweeps the turret back and forth between min and max limits using raw power.
      */
     @Override
     public void execute() {
-        turret.sweep();
+        turret.sweepPower(0.4);
     }
 }
