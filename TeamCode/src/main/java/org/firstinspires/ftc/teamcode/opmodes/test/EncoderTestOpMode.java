@@ -19,6 +19,10 @@ public class EncoderTestOpMode extends CommandOpMode {
         attachment = new GamepadEx(gamepad2);
         intake = new Intake(hardwareMap);
 
+        intake.setDefaultCommand(new StopIntake(intake));
+        attachment.getGamepadButton(GamepadKeys.Button.A)
+
+                .toggleWhenPressed(new IntakePollen(intake));
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
@@ -26,9 +30,6 @@ public class EncoderTestOpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        intake.setDefaultCommand(new StopIntake(intake));
-        attachment.getGamepadButton(GamepadKeys.Button.A)
-                .toggleWhenPressed(new IntakePollen(intake));
         telemetry.addData("Intake Position", intake.getCurrentPosition());
         telemetry.update();
     }
