@@ -167,4 +167,8 @@ public class Turret extends SubsystemBase {
             isUnwinding = false;
         }
     }
+
+    public int getCurrentPosition() {
+        return turretMotor.getCurrentPosition();
+    }
 }

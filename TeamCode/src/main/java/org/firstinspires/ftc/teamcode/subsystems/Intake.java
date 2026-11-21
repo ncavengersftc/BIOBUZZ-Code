@@ -42,7 +42,5 @@ public class Intake extends SubsystemBase {
      *
      * @return Current encoder position in ticks.
      */
-    public int getCurrentPosition() {
-        return intakeMotor.getCurrentPosition();
-    }
+
 }
