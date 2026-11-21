@@ -12,17 +12,15 @@ public class RotateTurret extends CommandBase {
      * @param turret Turret subsystem.
      */
     public RotateTurret(Turret turret) {
-
         this.turret = turret;
-
         addRequirements(turret);
     }
 
     /**
-     * The turret moves at a target angle of 0.25 degrees.
+     * Sweeps the turret back and forth between min and max limits.
      */
-     public void execute(){
-        turret.setTargetAngle(20);
-     }
+    @Override
+    public void execute() {
+        turret.sweep();
+    }
 }
-
