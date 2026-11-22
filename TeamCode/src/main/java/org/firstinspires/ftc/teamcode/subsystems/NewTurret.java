@@ -10,8 +10,10 @@ import org.firstinspires.ftc.teamcode.Constants;
 
 public class NewTurret extends SubsystemBase {
     private final MotorEx turretMotor;
+    private double targetDegrees = 0;
+    private boolean moveFowards = true;
      public NewTurret(HardwareMap hardwareMap){
-         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
+         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_117);
          turretMotor.resetEncoder();
          turretMotor.setRunMode(Motor.RunMode.PositionControl);
          turretMotor.setPositionCoefficient(Constants.TURRET_KP);
@@ -26,6 +28,25 @@ public class NewTurret extends SubsystemBase {
      }
 
      public void setTargetAngle(double degrees){
+         double theoreticalTargetDegrees = targetDegrees + degrees;
+
+         double range = Constants.TURRET_MAX_DEG - Constants.TURRET_MIN_DEG;
+
+         if(theoreticalTargetDegrees > Constants.TURRET_MAX_DEG){
+             //Wraps target to be within limits. (ex: 101 --> 1)
+             theoreticalTargetDegrees = Constants.TURRET_MIN_DEG +
+                     (theoreticalTargetDegrees - Constants.TURRET_MAX_DEG);
+             moveFowards = false;
+         }
+         else if(theoreticalTargetDegrees < Constants.TURRET_MIN_DEG){
+             theoreticalTargetDegrees = Constants.TURRET_MAX_DEG -
+                     (Constants.TURRET_MIN_DEG - theoreticalTargetDegrees);
+             moveFowards = true;
+         }
+         else {
+             moveForwards = theoreticalTargetDegrees >= turretMotor;
+         }
+
          turretMotor.setTargetDistance(Math.max(Constants.TURRET_MIN_DEG, Math.min(Constants.TURRET_MAX_DEG,degrees)));
      }
 
@@ -44,6 +65,7 @@ public class NewTurret extends SubsystemBase {
      @Override
      public void periodic(){
          super.periodic();
+         turretMotor.setTargetDistance(targetDegrees);
          turretMotor.set(Constants.TURRET_MAX_POWER);
      }
 }
