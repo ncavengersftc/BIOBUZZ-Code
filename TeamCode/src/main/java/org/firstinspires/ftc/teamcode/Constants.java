@@ -7,9 +7,12 @@ public class Constants {
     public static final double TURRET_MIN_DEG = -80.0;
     public static final double TURRET_MAX_DEG = 80.0;
     public static final double TURRET_KP = 0.01;
-    public static final double TURRET_TOLERANCE_DEG = 2.0;
-    public static final double TURRET_VISION_TOLERANCE_DEG = 2.0;
+    public static final double TURRET_TOLERANCE_TICKS = 2.0;
+    public static final double TURRET_VISION_TOLERANCE_TICKS = 2.0;
     public static final double TURRET_MAX_POWER = 0.6;
+
+    public static final int TURRET_MIN_TICKS = 0;
+    public static final int TURRET_MAX_TICKS = 50;
 
 
 }
