@@ -6,7 +6,7 @@ public class Constants {
     public static final double TURRET_GEAR_RATIO = 2.7;
     public static final double TURRET_MIN_DEG = 0.0;
     public static final double TURRET_MAX_DEG = 60.0;
-    public static final double TURRET_KP = 0.004;
+    public static final double TURRET_KP = 0.01;
     public static final double TURRET_TOLERANCE_TICKS = 10.0;
     public static final double TURRET_VISION_TOLERANCE_TICKS = 2.0;
     public static final double TURRET_MAX_POWER = 1.0;
