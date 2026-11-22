@@ -17,6 +17,7 @@ public class NewTurret extends SubsystemBase {
          turretMotor.setPositionCoefficient(Constants.TURRET_KP);
          turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_TICKS);
          turretMotor.setDistancePerPulse(Constants.TURRET_DEGREES_PER_TICK);
+         turretMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.FLOAT);
          turretMotor.setTargetDistance(Constants.TURRET_MIN_DEG);
      }
 
