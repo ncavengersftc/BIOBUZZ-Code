@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
-@Autonomous
+@Autonomous (name = "Basic Again" , group = "Test Auto")
 public class basicagian extends LinearOpMode {
 
     static final double ticksPerRevolution = 537.7;
