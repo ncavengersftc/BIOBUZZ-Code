@@ -12,7 +12,7 @@ public class Constants {
     public static final double TURRET_MAX_POWER = 1.0;
 
     public static final int TURRET_MIN_TICKS = 0;
-    public static final int TURRET_MAX_TICKS = 800;
+    public static final int TURRET_MAX_TICKS = 1099;
 
     public static final double TURRET_DEGREES_PER_TICK = (360.0/1425.1)*(64.0/176.0);
 
