@@ -16,16 +16,21 @@ public class NewTurret extends SubsystemBase {
          turretMotor.setRunMode(Motor.RunMode.PositionControl);
          turretMotor.setPositionCoefficient(Constants.TURRET_KP);
          turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_TICKS);
-         turretMotor.setTargetPosition(Constants.TURRET_MIN_TICKS);
+         turretMotor.setDistancePerPulse(Constants.TURRET_DEGREES_PER_TICK);
+         turretMotor.setTargetDistance(Constants.TURRET_MIN_DEG);
      }
 
      public void setTargetTicks(int ticks){
          turretMotor.setTargetPosition(Math.max(Constants.TURRET_MIN_TICKS, Math.min(Constants.TURRET_MAX_TICKS,ticks)));
      }
 
+     public void setTargetAngle(double degrees){
+         turretMotor.setTargetDistance(Math.max(Constants.TURRET_MIN_DEG, Math.min(Constants.TURRET_MAX_DEG,degrees)));
+     }
+
      @Override
      public void periodic(){
          super.periodic();
-         turretMotor.set(0.6);
+         turretMotor.set(Constants.TURRET_MAX_POWER);
      }
 }
