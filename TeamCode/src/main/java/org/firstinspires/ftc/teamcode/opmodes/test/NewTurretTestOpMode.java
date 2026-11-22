@@ -12,14 +12,22 @@ public class NewTurretTestOpMode extends CommandOpMode {
     @Override
     public void initialize(){
         turret = new NewTurret(hardwareMap);
-        turret.setTargetTicks(1067);
+        turret.setTargetAngle(60);
+
+        telemetry.addData("Status", "Dashboard Initialized");
+        telemetry.update();
 
         register(turret);
     }
 
+
     @Override
     public void run(){
         super.run();
+        telemetry.addData("Turret Angle", turret.getCurrentDistance());
+        telemetry.addData("Turret at Target",turret.atTarget());
+        telemetry.addData("Turret Ticks", turret.getCurrentTicks());
+        telemetry.update();
     }
 
 
