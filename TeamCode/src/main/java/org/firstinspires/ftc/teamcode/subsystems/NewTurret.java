@@ -20,8 +20,7 @@ public class NewTurret extends SubsystemBase {
      }
 
      public void setTargetTicks(int ticks){
-         turretMotor.setTargetPosition(ticks);
-
+         turretMotor.setTargetPosition(Math.max(Constants.TURRET_MIN_TICKS, Math.min(Constants.TURRET_MAX_TICKS,ticks)));
      }
 
      @Override
