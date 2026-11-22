@@ -15,8 +15,8 @@ public class NewTurret extends SubsystemBase {
          turretMotor.resetEncoder();
          turretMotor.setRunMode(Motor.RunMode.PositionControl);
          turretMotor.setPositionCoefficient(Constants.TURRET_KP);
-         turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_DEG);
-         turretMotor.setTargetPosition(0);
+         turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_TICKS);
+         turretMotor.setTargetPosition(Constants.TURRET_MIN_TICKS);
      }
 
      public void setTargetTicks(int ticks){

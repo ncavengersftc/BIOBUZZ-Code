@@ -45,7 +45,7 @@ public class Turret extends SubsystemBase {
                 360.0 / (turretMotor.getCPR() * Constants.TURRET_GEAR_RATIO));
         turretMotor.setRunMode(Motor.RunMode.PositionControl);
         turretMotor.setPositionCoefficient(Constants.TURRET_KP);
-        turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_DEG);
+        turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_TICKS);
         turretMotor.setTargetDistance(targetAngle);
     }
 
@@ -60,7 +60,7 @@ public class Turret extends SubsystemBase {
             stop();
             return;
         }
-        if (Math.abs(tx) > Constants.TURRET_VISION_TOLERANCE_DEG) {
+        if (Math.abs(tx) > Constants.TURRET_VISION_TOLERANCE_TICKS) {
             // Flip the sign if tracking turns the wrong way.
             setTargetAngle(getAngle() - tx);
         }
