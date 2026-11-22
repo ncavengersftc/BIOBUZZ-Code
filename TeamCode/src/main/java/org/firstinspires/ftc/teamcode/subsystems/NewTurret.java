@@ -29,6 +29,14 @@ public class NewTurret extends SubsystemBase {
          turretMotor.setTargetDistance(Math.max(Constants.TURRET_MIN_DEG, Math.min(Constants.TURRET_MAX_DEG,degrees)));
      }
 
+     public double getDistance(){
+         return turretMotor.getDistance();
+     }
+
+     public boolean atTarget(){
+         return turretMotor.atTargetPosition();
+     }
+
      @Override
      public void periodic(){
          super.periodic();
