@@ -1,170 +1,89 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
-import com.seattlesolvers.solverslib.util.MathUtils;
 
 import org.firstinspires.ftc.teamcode.Constants;
 
 public class Turret extends SubsystemBase {
     private final MotorEx turretMotor;
-    private double targetAngle = 0.0;
-    private boolean isEnabled = true;
-    private boolean isUnwinding = false;
+    //this is the set point of the turret
+    private double targetDegrees = 0;
+    private boolean moveForwards = true;
+     public Turret(HardwareMap hardwareMap){
+         turretMotor = new MotorEx(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_117);
+         turretMotor.resetEncoder();
+         turretMotor.setRunMode(Motor.RunMode.PositionControl);
+         turretMotor.setPositionCoefficient(Constants.TURRET_KP);
+         turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_TICKS);
+         turretMotor.setDistancePerPulse(Constants.TURRET_DEGREES_PER_TICK);
+         turretMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.FLOAT);
+         turretMotor.setTargetDistance(Constants.TURRET_MIN_DEG);
+     }
 
 
-    // Access MotorEx's protected controller to limit its output.
-    private static final class TurretMotor extends MotorEx {
-        private TurretMotor(HardwareMap hardwareMap) {
-            super(hardwareMap, "Turret Motor", Motor.GoBILDA.RPM_312);
-            positionController.setMaxOutput(1.0);
+     public void setTargetAngle(double degrees) {
+         //theoretical target degrees is the degrees that you want it at to get to plus the degrees inputed.
+         double theoreticalTargetDegrees = targetDegrees + degrees;
 
-            // The library skips this clamp inside tolerance.
-            // Keep TURRET_KP * TURRET_TOLERANCE_DEG <= 1.
-        }
-    }
+         double range = Constants.TURRET_MAX_DEG - Constants.TURRET_MIN_DEG;
 
-    /**
-     * Creates the object of Turret.
-     *
-     * @param hardwareMap Connects java code to the robots physical hardware.
-     */
+         //if the turret reaches more than the max, it just sets the max degrees as that.
+         if (theoreticalTargetDegrees > Constants.TURRET_MAX_DEG) {
+             //Wraps target to be within limits. (ex: 101 --> 1)
+             /*
+             theoreticalTargetDegrees = Constants.TURRET_MIN_DEG +
+                     (theoreticalTargetDegrees - Constants.TURRET_MAX_DEG);
+              */
+             theoreticalTargetDegrees = Constants.TURRET_MAX_DEG;
 
-    // Constructor
-    public Turret(HardwareMap hardwareMap) {
-        turretMotor = new TurretMotor(hardwareMap);
+         }
+         //if the turret reaches less than the min, it just sets the min degrees as that.
+         else if (theoreticalTargetDegrees < Constants.TURRET_MIN_DEG) {
+           /*
+           theoreticalTargetDegrees = Constants.TURRET_MAX_DEG -
+                     (Constants.TURRET_MIN_DEG - theoreticalTargetDegrees);
+            */
+             theoreticalTargetDegrees = Constants.TURRET_MIN_DEG;
+         }
 
-        // Initialize at the centered, cable-neutral position.
-        turretMotor.resetEncoder();
-        turretMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+         //if the turret position distance is true, it moves forward, if not, it becomes false
+         moveForwards = theoreticalTargetDegrees >= turretMotor.getDistance();
+         targetDegrees = theoreticalTargetDegrees;
+     }
 
-        // Feedback and targets now use turret degrees.
-        turretMotor.setDistancePerPulse(
-                360.0 / (turretMotor.getCPR() * Constants.TURRET_GEAR_RATIO));
-        turretMotor.setRunMode(Motor.RunMode.PositionControl);
-        turretMotor.setPositionCoefficient(Constants.TURRET_KP);
-        turretMotor.setPositionTolerance(Constants.TURRET_TOLERANCE_TICKS);
-        turretMotor.setTargetDistance(targetAngle);
-    }
+     public double getCurrentDistance(){
+         return turretMotor.getDistance();
+     }
 
-    /**
-     * Checks whether the Limelight detected a valid target and if the target is outside the allowed tolerance, and adjusts the turret's angle to align with it.
-     *
-     * @param tx The vertical offset of the limelight and the April tag.
-     */
-    // Call repeatedly with turret-mounted Limelight tx in degrees.
-    public void trackTarget(double tx) {
-        if (!Double.isFinite(tx)) {
-            stop();
-            return;
-        }
-        if (Math.abs(tx) > Constants.TURRET_VISION_TOLERANCE_TICKS) {
-            // Flip the sign if tracking turns the wrong way.
-            setTargetAngle(getAngle() - tx);
-        }
-    }
+     public int getCurrentTicks(){
+         return turretMotor.getCurrentPosition();
+     }
 
-    /**
-     * Sets the turret to an absolute target angle, checks that the angle is valid and within its limits, and initiates an unwind if the target exceeds those limits.
-     *
-     * @param degrees Degrees of the target angle.
-     */
+     public boolean atTarget(){
+         return turretMotor.atTargetPosition();
+     }
+     //target degrees
+     public void trackTarget (double tx){
+         if(!Double.isFinite(tx) && Math.abs(tx) < Constants.TURRET_VISION_TOLERANCE_DEG){
+             return;
+         }
+         targetDegrees = targetDegrees + tx;
+     }
 
-    // Set an absolute angle from center, unwinding if outside the limits.
-    public void setTargetAngle(double degrees) {
-        // If input isn't a valid number.
-        if (!Double.isFinite(degrees)) {
-            stop();
-            return;
-        }
+     public void stop(){
+         turretMotor.stopMotor();
+     }
 
-        // Finish the active unwind before accepting another target.
-        if (isUnwinding) {
-            return;
-        }
-
-        // If degrees is more than the maximum configured.
-        if (degrees > Constants.TURRET_MAX_DEG) {
-            isUnwinding = true;
-
-            // Sets limit to be reversed (so 361 -> 1)
-            degrees = Constants.TURRET_MAX_DEG - MathUtils.normalizeDegrees(
-                    Constants.TURRET_MAX_DEG - degrees, true);
-        }
-
-        // If degrees is less than the minimum configured.
-        else if (degrees < Constants.TURRET_MIN_DEG) {
-            isUnwinding = true;
-
-            // Sets limit to be reversed (so -361 -> -1)
-            degrees = Constants.TURRET_MIN_DEG + MathUtils.normalizeDegrees(
-                    degrees - Constants.TURRET_MIN_DEG, true);
-        }
-
-        // Stop if no equivalent angle fits; stop() also clears the unwind flag.
-        if (!Double.isFinite(degrees) || degrees < Constants.TURRET_MIN_DEG
-                || degrees > Constants.TURRET_MAX_DEG) {
-            stop();
-            return;
-        }
-
-        targetAngle = degrees;
-        turretMotor.setTargetDistance(targetAngle);
-        isEnabled = true;
-    }
-
-    /**
-     * Manually adjusts the turret's target angle by adding the specified degrees to its current or previous target angle.
-     *
-     * @param turnDegrees The degrees at which the turret should turn.
-     */
-    // Increases degrees manually (so use controller buttons).
-    public void manualControl(double turnDegrees) {
-        setTargetAngle((isEnabled ? targetAngle : getAngle()) + turnDegrees);
-    }
-
-    /**
-     * Returns the turret's current angle in degrees based on its encoder position.
-     *
-     * @return The turret motor position in degrees.
-     */
-    // Returns current motor position in degrees.
-    public double getAngle() {
-        return turretMotor.getDistance();
-    }
-
-    /**
-     * Stops the turret.
-     */
-    // Stops the turret.
-    public void stop() {
-        isEnabled = false;
-        isUnwinding = false;
-
-        // Resets the position controller and stops the motor.
-        turretMotor.set(0);
-        turretMotor.stopMotor();
-    }
-
-    /**
-     * Runs periodically to control the turret's power and check whether an active unwind movement has finished.
-     */
-    // Called every loop by the Command Scheduler (20 ms)
-    @Override
-    public void periodic() {
-        // If the robot isn't enabled (stopped), doesn't run the loop.
-        if (!isEnabled) {
-            return;
-        }
-
-        // Sets max power the motors can run at.
-        turretMotor.set(Constants.TURRET_MAX_POWER);
-
-        // If the turret is done unwinding.
-        if (isUnwinding && turretMotor.atTargetPosition()) {
-            isUnwinding = false;
-        }
-    }
+     @Override
+     public void periodic(){
+         super.periodic();
+         turretMotor.setTargetDistance(targetDegrees);
+         // actually gives power to the motors so it can get to set point
+         //boolean ternary function, what happens when move forwards is true, what happens when its false
+         turretMotor.set((moveForwards) ? Constants.TURRET_MAX_POWER : -Constants.TURRET_MAX_POWER);
+     }
 }
