@@ -1,61 +1,48 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
-import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 public class Odometry extends SubsystemBase {
-    private final MotorEx horizontalOdometry;
-    private final MotorEx verticalOdometry;
-
-    private static final double horizontalInchesPerPulse = 2.0;
-    private static final double verticalInchesPerPulse = 2.0;
-
-    // Physical pod offsets in inches from the robot's center.
-    private final double forwardOffset; 
-    private final double strafeOffset;
+    private final GoBildaPinpointDriver pinpoint;
 
     /**
-     * Creates an object of Odometry.
-     *
-     * @param hardwareMap Connects java code to the robots physical hardware.
+     * @param hardwareMap   Creates an Odometry object
+     * @param xPodOffset    How far left (+) or right (-) of robot center the forward (X) pod is, in inches
+     * @param yPodOffset    How far forward (+) or backward (-) of robot center the strafe (Y) pod is, in inches
      */
-    public Odometry(HardwareMap hardwareMap, double forwardOffset, double strafeOffset) {
-        horizontalOdometry = new MotorEx(hardwareMap, "Horizontal Odometry");
-        verticalOdometry = new MotorEx(hardwareMap, "Vertical Odometry");
+    public Odometry(HardwareMap hardwareMap, double xPodOffset, double yPodOffset) {
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
 
-        horizontalOdometry.setDistancePerPulse(horizontalInchesPerPulse);
-        verticalOdometry.setDistancePerPulse(verticalInchesPerPulse);
+        // Convert inch offsets to mm for Pinpoint configuration
+        pinpoint.setOffsets(xPodOffset, yPodOffset, DistanceUnit.INCH);
+        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
 
-        this.forwardOffset = forwardOffset;
-        this.strafeOffset = strafeOffset;
-
-    }
-
-    /**
-     * Returns current position from the odometry encoders in inches.
-     *
-     * @return Pose2D, current pose estimate.
-     */
-    public Pose2D getCurrentPosition() {
-        return new Pose2D(
-                DistanceUnit.INCH,
-                horizontalOdometry.getDistance(),
-                verticalOdometry.getDistance(),
-                AngleUnit.DEGREES,
-                0.0
+        // Flip either to REVERSED if forward/left movement reports negative values
+        pinpoint.setEncoderDirections(
+                GoBildaPinpointDriver.EncoderDirection.FORWARD,
+                GoBildaPinpointDriver.EncoderDirection.FORWARD
         );
+
+        pinpoint.resetPosAndIMU();
     }
 
-    /**
-     * Resets both odometry encoders.
-     */
+    public Pose2D getCurrentPosition() {
+        return pinpoint.getPosition();
+    }
+
     public void resetEncoders() {
-        horizontalOdometry.resetEncoder();
-        verticalOdometry.resetEncoder();
+        pinpoint.resetPosAndIMU();
+    }
+
+    @Override
+    public void periodic() {
+        // Must be called once per loop to fetch fresh sensor-fused pose data
+        pinpoint.update();
     }
 }
