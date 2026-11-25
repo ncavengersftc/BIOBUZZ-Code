@@ -71,7 +71,7 @@ public class Turret extends SubsystemBase {
         if (!Double.isFinite(tx) || Math.abs(tx) < Constants.TURRET_VISION_TOLERANCE_DEG) {
             return;
         }
-        setTargetAngle(getCurrentDistance() + tx);
+        setTargetAngle(getCurrentDistance() - tx);
     }
 
     public void stop() {
