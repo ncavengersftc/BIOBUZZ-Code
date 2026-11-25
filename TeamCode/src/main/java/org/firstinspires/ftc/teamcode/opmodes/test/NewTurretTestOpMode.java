@@ -32,7 +32,7 @@ public class NewTurretTestOpMode extends CommandOpMode {
         telemetry.addData("Turret Angle", turret.getCurrentDistance());
         telemetry.addData("Turret at Target",turret.atTarget());
         telemetry.addData("Turret Ticks", turret.getCurrentTicks());
-        //telemetry.addData("Distance from tag (m)", vision.getDistance());
+        telemetry.addData("Distance from tag (m)", vision.getDistance());
         telemetry.update();
         turret.trackTarget(vision.getTx());
 
