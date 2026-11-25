@@ -12,32 +12,32 @@ public class NewTurretTestOpMode extends CommandOpMode {
     private Vision vision;
 
     @Override
-    public void initialize(){
+    public void initialize() {
         turret = new Turret(hardwareMap);
         vision = new Vision(hardwareMap);
-        turret.setTargetAngle(167);
+        
+        // Start centered at 0 degrees instead of shooting to max angle
+        turret.setTargetAngle(0);
 
         telemetry.addData("Status", "Dashboard Initialized");
         telemetry.update();
 
         register(turret);
         register(vision);
-
     }
 
-
     @Override
-    public void run(){
+    public void run() {
         super.run();
+        
+        // Continuously track AprilTag tx offset
+        turret.trackTarget(vision.getTx());
+
+        telemetry.addData("Limelight tx Offset", vision.getTx());
         telemetry.addData("Turret Angle", turret.getCurrentDistance());
-        telemetry.addData("Turret at Target",turret.atTarget());
+        telemetry.addData("Turret at Target", turret.atTarget());
         telemetry.addData("Turret Ticks", turret.getCurrentTicks());
         telemetry.addData("Distance from tag (m)", vision.getDistance());
         telemetry.update();
-        turret.trackTarget(vision.getTx());
-
     }
-
-
-
 }
