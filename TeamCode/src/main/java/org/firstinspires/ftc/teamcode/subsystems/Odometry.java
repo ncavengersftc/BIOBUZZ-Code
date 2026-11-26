@@ -31,14 +31,26 @@ public class Odometry extends SubsystemBase {
         pinpoint.resetPosAndIMU();
     }
 
+    /**
+     * The odometry gets the current position.
+     *
+     * @return the Odometry's current position.
+     */
     public Pose2D getCurrentPosition() {
         return pinpoint.getPosition();
     }
 
+    /**
+     *
+     *The Odometry encoders reset.
+     */
     public void resetEncoders() {
         pinpoint.resetPosAndIMU();
     }
 
+    /**
+     * The pinpoint updates every periodic time frame.
+     */
     @Override
     public void periodic() {
         // Must be called once per loop to fetch fresh sensor-fused pose data

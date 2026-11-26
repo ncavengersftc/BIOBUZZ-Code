@@ -9,7 +9,7 @@ public class IntakeTransfer extends SubsystemBase {
     private final MotorEx intakeTransferMotor;
 
     /**
-     * Creates the object of Intake.
+     * Creates the object of IntakeTransfer.
      *
      * @param hardwareMap Connects java code to the robots physical hardware.
      */
@@ -20,16 +20,16 @@ public class IntakeTransfer extends SubsystemBase {
     }
 
     /**
-     * Sets the intake motor power to the value, can control its direction and speed of rotation.
+     * Sets the intakeTransfer motor power to the value, can control its direction and speed of rotation.
      *
-     * @param power The power in which the intake motor should run at.
+     * @param power The power in which the intakeTransfer motor should run at.
      */
     public void intake(double power) {
         intakeTransferMotor.set(power);
     }
 
     /**
-     * The Intake motor stops rotating, while going on a FLOAT setting.
+     * The IntakeTransfer motor stops rotating, while going on a FLOAT setting.
      */
 
     public void stop() {

@@ -6,9 +6,9 @@ public class StopIntakeTransfer extends CommandBase {
     private final IntakeTransfer intakeTransfer;
 
     /**
-     * Creates an object of StopIntake.
+     * Creates an object of StopIntakeTransfer.
      *
-     * @param intakeTransfer Intake subsystem.
+     * @param intakeTransfer IntakeTransfer subsystem.
      */
 
     public StopIntakeTransfer(IntakeTransfer intakeTransfer) {
@@ -19,7 +19,7 @@ public class StopIntakeTransfer extends CommandBase {
     }
 
     /**
-     * The Intake stops rotating.
+     * The IntakeTransfer stops rotating.
      */
     @Override
     public void execute() {
