@@ -4,16 +4,16 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
-public class Tower extends SubsystemBase {
-    private final CRServo transferServo;
+public class BallStopper extends SubsystemBase {
+    private final CRServo ballStopperServo;
 
     /**
      * Creates the object of Tower.
      *
      * @param hardwareMap Connects java code to the robots physical hardware.
      */
-    public Tower(HardwareMap hardwareMap){
-        transferServo = hardwareMap.get(CRServo.class, "Transfer Servo");
+    public BallStopper(HardwareMap hardwareMap){
+        ballStopperServo = hardwareMap.get(CRServo.class, "Transfer Servo");
     }
 
     /**
@@ -22,13 +22,14 @@ public class Tower extends SubsystemBase {
      * @param power The power at which the transfer servo should run at.
      */
     public void transfer(double power){
-        transferServo.setPower(power);
+        ballStopperServo.setPower(power);
     }
 
     /**
      * The transfer servo stops rotating.
      */
     public void stop(){
-        transferServo.setPower(0);
+        ballStopperServo.setPower(0);
     }
 }
+
