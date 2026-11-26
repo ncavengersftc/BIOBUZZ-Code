@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.controller.PIDFController;
+import com.seattlesolvers.solverslib.hardware.motors.Motor;
+import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 public class Shooter extends SubsystemBase {
-    private final DcMotorEx outtakeMotorLeft;
+    private final MotorEx shooterMotor;
 
     private final PIDFController pidfController;
 
@@ -20,10 +17,10 @@ public class Shooter extends SubsystemBase {
      * @param hardwareMap Connects java code to the robots physical hardware.
      */
     public Shooter(HardwareMap hardwareMap) {
-        outtakeMotorLeft = hardwareMap.get(DcMotorEx.class, "Shooter Motor");
+        shooterMotor = new MotorEx(hardwareMap, "Shooter Motor", 112, 6000);
 
 
-        outtakeMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooterMotor.setInverted(true);
 
 
         pidfController = new PIDFController(0.001,0.0,0.00,0.0001);
@@ -37,10 +34,10 @@ public class Shooter extends SubsystemBase {
     public void shoot(double rotationsPerSecond) {
         double targetTicks = rotationsPerSecond * 112;
 
-        double currentVelocity = outtakeMotorLeft.getVelocity();
+        double currentVelocity = shooterMotor.getVelocity();
         double power = pidfController.calculate(currentVelocity, targetTicks);
 
-        outtakeMotorLeft.setPower(power);
+        shooterMotor.set(power);
 
     }
 
@@ -50,9 +47,9 @@ public class Shooter extends SubsystemBase {
 
     public void stop() {
         pidfController.reset();
-        outtakeMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooterMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.FLOAT);
 
-        outtakeMotorLeft.setPower(0);
+        shooterMotor.set(0);
 
     }
 }

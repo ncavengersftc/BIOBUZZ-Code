@@ -5,17 +5,17 @@ import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
-public class Intake extends SubsystemBase {
-    private final MotorEx intakeMotor;
+public class IntakeTransfer extends SubsystemBase {
+    private final MotorEx intakeTransferMotor;
 
     /**
      * Creates the object of Intake.
      *
      * @param hardwareMap Connects java code to the robots physical hardware.
      */
-    public Intake(HardwareMap hardwareMap) {
-        intakeMotor = new MotorEx(hardwareMap, "Intake Motor", Motor.GoBILDA.RPM_312);
-        intakeMotor.setInverted(true);
+    public IntakeTransfer(HardwareMap hardwareMap) {
+        intakeTransferMotor = new MotorEx(hardwareMap, "Intake Motor", Motor.GoBILDA.RPM_312);
+        intakeTransferMotor.setInverted(true);
 
     }
 
@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase {
      * @param power The power in which the intake motor should run at.
      */
     public void intake(double power) {
-        intakeMotor.set(power);
+        intakeTransferMotor.set(power);
     }
 
     /**
@@ -33,7 +33,10 @@ public class Intake extends SubsystemBase {
      */
 
     public void stop() {
-        intakeMotor.set(0);
-        intakeMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.FLOAT);
+        intakeTransferMotor.set(0);
+        intakeTransferMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.FLOAT);
+    }
+
+    public void intakeTransfer(double power) {
     }
 }

@@ -6,26 +6,22 @@ import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.commands.DriveCommand;
-import org.firstinspires.ftc.teamcode.commands.IntakePollen;
+import org.firstinspires.ftc.teamcode.commands.IntakeTransferPollen;
 import org.firstinspires.ftc.teamcode.commands.RotateTurret;
 import org.firstinspires.ftc.teamcode.commands.ShootPollen;
-import org.firstinspires.ftc.teamcode.commands.StopIntake;
+import org.firstinspires.ftc.teamcode.commands.StopIntakeTransfer;
 import org.firstinspires.ftc.teamcode.commands.StopShooter;
-import org.firstinspires.ftc.teamcode.commands.StopTransfer;
 import org.firstinspires.ftc.teamcode.commands.StopTurret;
-import org.firstinspires.ftc.teamcode.commands.TransferPollen;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeTransfer;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
-import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.subsystems.Turret;
 @TeleOp(name = "TeleOpMode", group = "Main")
 public class TeleOpMode extends CommandOpMode {
     private GamepadEx driver;
     private GamepadEx attachment;
-    private Intake intake;
+    private IntakeTransfer intake;
     private Shooter shooter;
-    private Transfer transfer;
     private Turret turret;
     private Drive drive;
 
@@ -38,30 +34,25 @@ public class TeleOpMode extends CommandOpMode {
         driver = new GamepadEx(gamepad1);
         attachment = new GamepadEx(gamepad2);
 
-        intake = new Intake(hardwareMap);
+        intake = new IntakeTransfer(hardwareMap);
         shooter = new Shooter(hardwareMap);
-        transfer = new Transfer(hardwareMap);
         turret = new Turret(hardwareMap);
         drive = new Drive(hardwareMap);
 
         //register before default commands so that it should work
 
-        register(drive, intake,transfer, shooter,turret);
+        register(drive, intake, shooter,turret);
 
-        intake.setDefaultCommand(new StopIntake(intake));
+        intake.setDefaultCommand(new StopIntakeTransfer(intake));
         shooter.setDefaultCommand(new StopShooter(shooter));
-        transfer.setDefaultCommand(new StopTransfer(transfer));
         turret.setDefaultCommand(new StopTurret(turret));
         drive.setDefaultCommand(new DriveCommand(drive, driver));
 
         attachment.getGamepadButton(GamepadKeys.Button.A)
-                .toggleWhenPressed(new IntakePollen(intake));
+                .toggleWhenPressed(new IntakeTransferPollen(intake));
 
         attachment.getGamepadButton(GamepadKeys.Button.B)
                 .toggleWhenPressed(new ShootPollen(shooter));
-
-        attachment.getGamepadButton(GamepadKeys.Button.X)
-                .toggleWhenPressed(new TransferPollen(transfer));
 
         attachment.getGamepadButton(GamepadKeys.Button.Y)
                 .toggleWhenPressed(new RotateTurret(turret));
