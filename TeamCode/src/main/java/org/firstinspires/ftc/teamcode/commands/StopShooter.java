@@ -26,3 +26,4 @@ public class StopShooter extends CommandBase {
         shooter.stop();
     }
 }
+

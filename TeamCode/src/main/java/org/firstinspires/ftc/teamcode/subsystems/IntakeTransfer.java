@@ -40,3 +40,4 @@ public class IntakeTransfer extends SubsystemBase {
     public void intakeTransfer(double power) {
     }
 }
+

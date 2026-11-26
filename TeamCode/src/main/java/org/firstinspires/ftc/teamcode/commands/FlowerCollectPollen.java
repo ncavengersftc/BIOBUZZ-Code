@@ -17,3 +17,4 @@ public class FlowerCollectPollen extends CommandBase {
         flowerCollector.collect(0.25);
     }
 }
+
